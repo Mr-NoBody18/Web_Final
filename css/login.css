@@ -1,0 +1,160 @@
+/* Giriş ve Kayıt Sayfaları için CSS */
+
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    padding: 40px 0;
+}
+
+.auth-container {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+}
+
+.auth-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.auth-subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.form-group input {
+    background: rgba(50, 50, 50, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.form-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-checkbox input {
+    width: 18px;
+    height: 18px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--accent-red), var(--accent-purple));
+    color: white;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.auth-links {
+    margin-top: 25px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.auth-links a {
+    color: var(--accent-purple);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.divider {
+    margin: 0 10px;
+    color: var(--text-secondary);
+}
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background: rgba(255, 77, 77, 0.2);
+    border: 1px solid rgba(255, 77, 77, 0.5);
+    color: var(--accent-red);
+}
+
+.alert-success {
+    background: rgba(75, 181, 67, 0.2);
+    border: 1px solid rgba(75, 181, 67, 0.5);
+    color: #4bb543;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 576px) {
+    .auth-container {
+        padding: 25px;
+        border-radius: 10px;
+    }
+    
+    .auth-title {
+        font-size: 24px;
+    }
+    
+    .form-group input {
+        padding: 10px 12px;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+    }
+}

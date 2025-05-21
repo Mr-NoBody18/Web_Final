@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikayePortalı - Tarihte Bugün</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/today.css">
+    <script src="header-loader.js"></script>
+    <script src="mobile-nav.js"></script>
+</head>
+<body>
+    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tarihte Bugün Sayfası İçeriği -->
+    <main class="container">
+        <!-- Hero Bölümü -->
+        <section class="hero-section">
+            <h1 class="section-title">Tarihte Bugün</h1>
+            
+            <div class="today-intro">
+                <p>Tarihte bugün neler oldu? Geçmişte bugünkü tarihte gerçekleşen önemli olayları keşfedin.</p>
+            </div>
+            
+            <!-- Tarih Seçici -->
+            <div class="date-picker-container">
+                <div class="date-picker-wrapper">
+                    <label for="date-picker" class="date-picker-label">Tarih Seçin:</label>
+                    <div class="date-picker-input-wrapper">
+                        <select id="month-select" class="date-select">
+                            <option value="1">Ocak</option>
+                            <option value="2">Şubat</option>
+                            <option value="3">Mart</option>
+                            <option value="4">Nisan</option>
+                            <option value="5">Mayıs</option>
+                            <option value="6">Haziran</option>
+                            <option value="7">Temmuz</option>
+                            <option value="8">Ağustos</option>
+                            <option value="9">Eylül</option>
+                            <option value="10">Ekim</option>
+                            <option value="11">Kasım</option>
+                            <option value="12">Aralık</option>
+                        </select>
+                        <select id="day-select" class="date-select">
+                            <!-- Günler JavaScript ile doldurulacak -->
+                        </select>
+                        <button id="search-date-button" class="search-date-button">Göster</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tarihte Bugün Olayları -->
+        <section class="history-events-section">
+            <h2 class="section-title">Tarihsel Olaylar</h2>
+            <div class="selected-date-display">
+                <span id="selected-date">Bugün</span> tarihinde gerçekleşen olaylar
+            </div>
+            
+            <div id="history-events-container" class="history-events-container">
+                <!-- Olaylar JavaScript ile doldurulacak -->
+                <div class="loading-spinner" id="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Olaylar yükleniyor...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rastgele Tarihsel Olaylar -->
+        <section class="random-events-section">
+            <h2 class="section-title">Rastgele Tarihsel Olaylar</h2>
+            
+            <div class="card-grid">
+                <!-- Rastgele olaylar JavaScript ile doldurulacak -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Anasayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="#">Macera</a></li>
+                            <li><a href="#">Romantik</a></li>
+                            <li><a href="#">Bilim Kurgu</a></li>
+                            <li><a href="#">Fantastik</a></li>
+                            <li><a href="#">Korku</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Yasal</h3>
+                        <ul>
+                            <li><a href="#">Kullanım Şartları</a></li>
+                            <li><a href="#">Gizlilik Politikası</a></li>
+                            <li><a href="#">Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="today.js"></script>
+</body>
+</html>

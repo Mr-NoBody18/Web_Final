@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HikayePortalı - Gönderi Detayı</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/content_system.css">    <script src="../static-data-handler.js"></script>
+    <script src="../header-loader.js"></script>
+    <script src="../mobile-nav.js"></script>
+</head>
+<body>
+    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <!-- Gönderi Detay Ana Bölümü -->
+    <main class="container">
+        <div class="post-detail-container">
+            <!-- Gönderi Başlık ve Meta Bilgileri -->
+            <div class="post-header">
+                <div class="post-category" id="post-category">Kategori</div>
+                <h1 class="post-title" id="post-title">Gönderi Başlığı</h1>
+                
+                <div class="post-meta">
+                    <div class="post-author">
+                        <div class="author-avatar" id="author-avatar"></div>
+                        <div class="author-info">
+                            <span class="author-name" id="author-name">Yazar Adı</span>
+                            <span class="post-date" id="post-date">Tarih</span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-stats">
+                        <span id="view-count">👁️ 0 Görüntülenme</span>
+                        <span id="comment-count">💬 0 Yorum</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gönderi Kapak Görseli -->
+            <img src="" alt="Gönderi Kapak Görseli" class="post-featured-image" id="post-image">
+            
+            <!-- Gönderi İçeriği -->
+            <div class="post-content" id="post-content">
+                <!-- İçerik blokları JavaScript ile buraya yüklenecek -->
+            </div>
+            
+            <!-- Gönderi Etiketleri -->
+            <div class="post-tags" id="post-tags">
+                <!-- Etiketler JavaScript ile buraya yüklenecek -->
+            </div>
+            
+            <!-- Gönderi Etkileşim Butonları -->
+            <div class="post-actions">
+                <div class="action-buttons">
+                    <button class="action-button" data-action="like">🤍 Beğen</button>
+                    <button class="action-button" data-action="save">📄 Kaydet</button>
+                    <button class="action-button" data-action="report">🚩 Bildir</button>
+                </div>
+                
+                <div class="share-buttons">
+                    <button class="share-button" data-platform="twitter" title="Twitter'da Paylaş">𝕏</button>
+                    <button class="share-button" data-platform="facebook" title="Facebook'ta Paylaş">f</button>
+                    <button class="share-button" data-platform="whatsapp" title="WhatsApp'ta Paylaş">w</button>
+                    <button class="share-button" data-platform="linkedin" title="LinkedIn'de Paylaş">in</button>
+                    <button class="share-button" data-platform="copy" title="Bağlantıyı Kopyala">📋</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Benzer Gönderiler -->
+        <section class="related-posts">
+            <h2 class="section-title">Benzer Gönderiler</h2>
+            
+            <div class="card-grid" id="related-posts-container">
+                <!-- Benzer gönderiler JavaScript ile buraya yüklenecek -->
+            </div>
+        </section>
+        
+        <!-- Yorumlar Bölümü -->
+        <section class="comments-section">
+            <h2 class="comments-title">Yorumlar (<span id="comments-count">0</span>)</h2>
+            
+            <form class="comment-form" id="comment-form">
+                <div class="comment-form-header">
+                    <div class="comment-user-avatar"></div>
+                    <textarea class="comment-input" placeholder="Düşüncelerinizi paylaşın..."></textarea>
+                </div>
+                <div class="comment-form-footer">
+                    <div class="comment-formatting">
+                        <button type="button" class="format-btn" data-format="bold" title="Kalın">B</button>
+                        <button type="button" class="format-btn" data-format="italic" title="İtalik">I</button>
+                        <button type="button" class="format-btn" data-format="link" title="Bağlantı">🔗</button>
+                        <button type="button" class="format-btn" data-format="emoji" title="Emoji">😊</button>
+                    </div>
+                    <button type="submit" class="comment-button">Yorum Yap</button>
+                </div>
+            </form>
+            
+            <div class="comment-list" id="comment-list">
+                <!-- Yorumlar JavaScript ile buraya yüklenecek -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Anasayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="#">Macera</a></li>
+                            <li><a href="#">Romantik</a></li>
+                            <li><a href="#">Bilim Kurgu</a></li>
+                            <li><a href="#">Fantastik</a></li>
+                            <li><a href="#">Korku</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Yasal</h3>
+                        <ul>
+                            <li><a href="#">Kullanım Şartları</a></li>
+                            <li><a href="#">Gizlilik Politikası</a></li>
+                            <li><a href="#">Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="post_detail.js"></script>
+</body>
+</html>

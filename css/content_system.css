@@ -1,0 +1,366 @@
+/* content_system.css - Yeni İçerik Sistemi Stilleri */
+
+/* Ana Konteyner */
+.post-editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Form Elemanları */
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-input, .form-select {
+    width: 100%;
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 12px 15px;
+    color: var(--text-primary);
+    font-size: 16px;
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+}
+
+/* Kapak Görseli Yükleme */
+.cover-upload-container {
+    width: 100%;
+    position: relative;
+}
+
+.cover-preview {
+    width: 100%;
+    height: 200px;
+    background: rgba(30, 30, 30, 0.5);
+    border: 2px dashed var(--glass-border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cover-preview:hover {
+    border-color: var(--accent-purple);
+    background: rgba(40, 40, 40, 0.5);
+}
+
+.cover-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+.upload-icon {
+    font-size: 32px;
+    opacity: 0.7;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* İçerik Düzenleme Alanı */
+.content-editor {
+    margin-top: 30px;
+}
+
+.content-section-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.content-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.toolbar-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.toolbar-icon {
+    font-style: normal;
+}
+
+/* İçerik Blokları */
+.content-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 300px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.empty-content-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--text-secondary);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Tam Genişlik Blok */
+.full-width-block {
+    width: 100%;
+    background: rgba(40, 40, 40, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Bölünmüş Blok */
+.split-block {
+    width: 100%;
+    display: flex;
+    background: rgba(40, 40, 40, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.split-left, .split-right {
+    flex: 1;
+    min-height: 200px;
+    position: relative;
+}
+
+.split-left {
+    border-right: 1px solid var(--glass-border);
+}
+
+/* İçerik Tipi Seçimi */
+.content-type-selector {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.type-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.type-btn:hover, .type-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+/* Metin İçeriği */
+.text-content {
+    width: 100%;
+    min-height: 200px;
+    padding: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.text-content:focus {
+    outline: none;
+}
+
+/* Görsel İçeriği */
+.image-content {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 30, 30, 0.3);
+    cursor: pointer;
+}
+
+.image-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+/* Blok Kontrolleri */
+.block-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.block-control-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.block-control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+/* Gönderi Aksiyonları */
+.post-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-purple));
+    color: white;
+    border: none;
+}
+
+.action-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .split-block {
+        flex-direction: column;
+    }
+    
+    .split-left {
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .post-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+}

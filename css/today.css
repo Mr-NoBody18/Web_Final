@@ -1,0 +1,473 @@
+/* today.css - Tarihte Bugün Sayfası Özel Stilleri */
+
+.hero-section {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.today-intro {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Tarih Seçici Stilleri */
+.date-picker-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid var(--glass-border);
+}
+
+.date-picker-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.date-picker-label {
+    font-size: 18px;
+    color: var(--accent-brown);
+    font-weight: 500;
+}
+
+.date-picker-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.date-select {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    min-width: 120px;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-date-button {
+    background: linear-gradient(45deg, var(--accent-brown), var(--accent-purple));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-date-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.today-date-display {
+    font-size: 24px;
+    color: var(--accent-brown);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.calendar-container {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid var(--glass-border);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.calendar-nav-button {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendar-nav-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.calendar-day:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.calendar-day.other-month {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.calendar-day.today {
+    background: rgba(147, 112, 219, 0.2);
+    color: var(--accent-purple);
+    font-weight: 600;
+}
+
+.calendar-day.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-red);
+}
+
+.history-events-section {
+    margin: 50px 0;
+}
+
+.selected-date-display {
+    font-size: 20px;
+    color: var(--accent-brown);
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.history-events-container {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.history-event-card {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease;
+}
+
+.history-event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-year {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-purple);
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(147, 112, 219, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.event-content {
+    flex: 1;
+}
+
+.event-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.events-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.events-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.events-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 110px;
+    height: 3px;
+    border-radius: 6px;
+    background: linear-gradient(85deg, var(--accent-red), var(--accent-purple), transparent);
+}
+
+.event-card {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--glass-border);
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-date {
+    color: var(--accent-brown);
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.event-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.event-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.event-link {
+    display: inline-block;
+    color: var(--accent-purple);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.event-link:hover {
+    text-decoration: underline;
+}
+
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: var(--text-secondary);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid var(--accent-purple);
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.no-events-message {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Rastgele Olaylar Bölümü */
+.random-events-section {
+    margin: 50px 0;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.content-card {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-category {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    background: rgba(147, 112, 219, 0.2);
+    color: var(--accent-purple);
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.info-box {
+    backdrop-filter: blur(10px);
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.info-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.info-item {
+    font-size: 13px;
+}
+
+.info-label {
+    color: var(--text-secondary);
+}
+
+.info-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--glass-border);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.card-stats {
+    display: flex;
+    gap: 15px;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .calendar-grid {
+        gap: 5px;
+    }
+    
+    .calendar-day {
+        font-size: 12px;
+    }
+    
+    .calendar-day-header {
+        font-size: 12px;
+    }
+    
+    .date-picker-input-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .history-event-card {
+        flex-direction: column;
+    }
+    
+    .event-year {
+        align-self: flex-start;
+    }
+}

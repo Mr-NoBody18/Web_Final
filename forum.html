@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum - Hikaye Portalı</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/forum.css">
+    <script src="header-loader.js"></script>
+    <script src="mobile-nav.js"></script>
+    <script src="forum.js"></script>
+</head>
+<body>
+    <!-- Header yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <main class="container">
+        <section class="forum-header">
+            <h1 class="page-title">Forum</h1>
+            <p class="page-description">Hikaye Portalı topluluğuna katılın, düşüncelerinizi paylaşın ve diğer üyelerle etkileşime geçin.</p>
+            
+            <div class="forum-actions">
+                <button id="new-topic-button" class="primary-button">Yeni Konu Aç</button>
+            </div>
+        </section>
+
+        <section class="forum-categories">
+            <h2 class="section-title">Kategoriler</h2>
+            <div class="category-list">
+                <div class="category-item" data-category="genel">
+                    <h3>Genel Konular</h3>
+                    <p>Hikaye yazımı, okuma alışkanlıkları ve genel sohbet</p>
+                </div>
+                <div class="category-item" data-category="hikayeler">
+                    <h3>Hikayeler</h3>
+                    <p>Hikayeler hakkında tartışmalar ve yorumlar</p>
+                </div>
+                <div class="category-item" data-category="yazarlar">
+                    <h3>Yazarlar</h3>
+                    <p>Yazarlar ve yazım teknikleri hakkında konuşmalar</p>
+                </div>
+                <div class="category-item" data-category="oneri">
+                    <h3>Öneri ve İstekler</h3>
+                    <p>Site hakkında öneriler ve istekler</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="forum-topics">
+            <h2 class="section-title">Güncel Konular</h2>
+            
+            <div class="topic-filters">
+                <select id="category-filter" class="filter-select">
+                    <option value="all">Tüm Kategoriler</option>
+                    <option value="genel">Genel Konular</option>
+                    <option value="hikayeler">Hikayeler</option>
+                    <option value="yazarlar">Yazarlar</option>
+                    <option value="oneri">Öneri ve İstekler</option>
+                </select>
+                
+                <select id="sort-filter" class="filter-select">
+                    <option value="newest">En Yeni</option>
+                    <option value="popular">En Popüler</option>
+                    <option value="most-commented">En Çok Yorum Alan</option>
+                </select>
+            </div>
+            
+            <div id="topics-container" class="topics-list">
+                <!-- Konular JavaScript ile buraya yüklenecek -->
+                <div class="no-topics-message" style="display: none;">
+                    <p>Henüz konu bulunmuyor. İlk konuyu siz açmak ister misiniz?</p>
+                    <button class="primary-button new-topic-button">Yeni Konu Aç</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yeni Konu Ekleme Modalı -->
+        <div id="new-topic-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Yeni Konu Aç</h2>
+                <form id="new-topic-form">
+                    <div class="form-group">
+                        <label for="topic-title">Konu Başlığı</label>
+                        <input type="text" id="topic-title" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="topic-category">Kategori</label>
+                        <select id="topic-category" name="category" required>
+                            <option value="">Kategori Seçin</option>
+                            <option value="genel">Genel Konular</option>
+                            <option value="hikayeler">Hikayeler</option>
+                            <option value="yazarlar">Yazarlar</option>
+                            <option value="oneri">Öneri ve İstekler</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="topic-content">İçerik</label>
+                        <textarea id="topic-content" name="content" rows="6" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="primary-button">Konuyu Oluştur</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Konu Detay Modalı -->
+        <div id="topic-detail-modal" class="modal">
+            <div class="modal-content topic-detail-content">
+                <span class="close-button">&times;</span>
+                <div id="topic-detail-container">
+                    <!-- Konu detayları JavaScript ile buraya yüklenecek -->
+                </div>
+                
+                <div class="topic-comments">
+                    <h3>Yorumlar (<span id="topic-comments-count">0</span>)</h3>
+                    
+                    <div id="topic-comments-list">
+                        <!-- Yorumlar JavaScript ile buraya yüklenecek -->
+                    </div>
+                    
+                    <form id="topic-comment-form" class="comment-form">
+                        <div class="form-group">
+                            <label for="comment-content">Yorumunuz</label>
+                            <textarea id="comment-content" name="content" rows="3" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="comment-button">Yorum Yap</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Ana Sayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="forum.html">Forum</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="discover.html?category=kisa-hikaye">Kısa Hikayeler</a></li>
+                            <li><a href="discover.html?category=roman">Roman</a></li>
+                            <li><a href="discover.html?category=siir">Şiir</a></li>
+                            <li><a href="discover.html?category=deneme">Deneme</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Hesap</h3>
+                        <ul>
+                            <li><a href="login.html">Giriş Yap</a></li>
+                            <li><a href="register.html">Kayıt Ol</a></li>
+                            <li><a href="profile.html">Profilim</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Hikaye Portalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

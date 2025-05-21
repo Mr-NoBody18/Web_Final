@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - Hikaye Portalı</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <!-- Header yüklenecek -->
+    <div id="header-container"></div>
+
+    <main class="container">
+        <section class="auth-section">
+            <div class="auth-container">
+                <h1 class="auth-title">Kayıt Ol</h1>
+                <p class="auth-subtitle">Hikaye Portalı'na katılın ve hikayelerinizi paylaşın!</p>
+                
+                <div class="alert alert-error" id="error-message" style="display: none;"></div>
+                
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="username">Kullanıcı Adı</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="real_name">Gerçek Adınız</label>
+                        <input type="text" id="real_name" name="real_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-posta Adresi</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">Yaşınız</label>
+                        <input type="number" id="age" name="age" min="13" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Şifre</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password">Şifre Tekrar</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    
+                    <div class="form-group form-checkbox">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">Kullanım şartlarını ve gizlilik politikasını kabul ediyorum</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Kayıt Ol</button>
+                </form>
+                
+                <div class="auth-links">
+                    <span>Zaten bir hesabınız var mı?</span>
+                    <a href="login.html" class="login-link">Giriş Yap</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer yüklenecek -->
+    <div id="footer-container"></div>
+
+    <script src="header-loader.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>

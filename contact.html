@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikayePortalı - İletişim</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <script src="header-loader.js"></script>
+    <script src="mobile-nav.js"></script>
+</head>
+<body>
+    <!-- Header yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <main class="container">
+        <section class="contact-hero-section">
+            <h1 class="page-title">İletişim</h1>
+            <p class="contact-intro">
+                Hikaye Portalı ekibi olarak görüşleriniz bizim için çok değerli. Öneri, şikayet veya işbirliği teklifleriniz için aşağıdaki formu kullanabilir veya sosyal medya hesaplarımızdan bize ulaşabilirsiniz.
+            </p>
+        </section>
+
+        <div class="contact-content">
+            <div class="contact-form-container">
+                <h2 class="form-title">Bize Ulaşın</h2>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Adınız Soyadınız</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">E-posta Adresiniz</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Konu</label>
+                        <select id="subject" name="subject" class="form-select" required>
+                            <option value="" disabled selected>Lütfen bir konu seçin</option>
+                            <option value="suggestion">Öneri</option>
+                            <option value="complaint">Şikayet</option>
+                            <option value="cooperation">İşbirliği</option>
+                            <option value="other">Diğer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Mesajınız</label>
+                        <textarea id="message" name="message" class="form-textarea" required></textarea>
+                        <p class="form-help">En az 20 karakter girmelisiniz.</p>
+                    </div>
+
+                    <div class="form-checkbox-group">
+                        <input type="checkbox" id="privacy" name="privacy" class="form-checkbox" required>
+                        <label for="privacy" class="form-checkbox-label">Kişisel verilerin korunması politikasını okudum ve kabul ediyorum.</label>
+                    </div>
+
+                    <button type="submit" class="submit-button">Gönder</button>
+                </form>
+            </div>
+
+            <div class="contact-info-container">
+                <div class="contact-info-section">
+                    <h3 class="info-title">İletişim Bilgileri</h3>
+                    <div class="info-item">
+                        <span class="info-icon">📧</span>
+                        <span class="info-text">info@hikayeportali.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">📱</span>
+                        <span class="info-text">+90 555 123 4567</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">📍</span>
+                        <span class="info-text">İstanbul, Türkiye</span>
+                    </div>
+                </div>
+
+                <div class="social-media-section">
+                    <h3 class="info-title">Sosyal Medya</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <span class="social-icon">📘</span>
+                            <span class="social-name">Facebook</span>
+                        </a>
+                        <a href="https://www.instagram.com/ahmet_uskut/" class="social-link">
+                            <span class="social-icon">📷</span>
+                            <span class="social-name">Instagram</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <span class="social-icon">🐦</span>
+                            <span class="social-name">Twitter</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <span class="social-icon">📹</span>
+                            <span class="social-name">YouTube</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <h3 class="info-title">Konum</h3>
+                    <div class="map-placeholder">
+                        <!-- Burada gerçek bir harita entegrasyonu olabilir -->
+                        <div class="map-image">🗺️ Harita Görüntüsü</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="faq-section">
+            <h2 class="section-title">Sık Sorulan Sorular</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3 class="faq-question">Hikaye göndermek için üye olmak zorunda mıyım?</h3>
+                    <p class="faq-answer">Evet, hikaye göndermek için üye olmanız gerekmektedir. Üyelik işlemi tamamen ücretsizdir ve sadece birkaç dakikanızı alacaktır.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Gönderdiğim hikayelerin telif hakkı bana mı ait?</h3>
+                    <p class="faq-answer">Evet, gönderdiğiniz hikayelerin telif hakkı size aittir. Hikaye Portalı olarak sadece yayınlama hakkını kullanırız.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Ne tür hikayeler gönderebilirim?</h3>
+                    <p class="faq-answer">Her türlü hikaye gönderebilirsiniz, ancak içerik kurallarımıza uygun olması gerekmektedir. Detaylı bilgi için "Hikaye Gönder" sayfasındaki yönergeleri inceleyebilirsiniz.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Anasayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="#">Macera</a></li>
+                            <li><a href="#">Romantik</a></li>
+                            <li><a href="#">Bilim Kurgu</a></li>
+                            <li><a href="#">Fantastik</a></li>
+                            <li><a href="#">Korku</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Yasal</h3>
+                        <ul>
+                            <li><a href="#">Kullanım Şartları</a></li>
+                            <li><a href="#">Gizlilik Politikası</a></li>
+                            <li><a href="#">Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form gönderimi
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Mesajınız gönderildi! En kısa sürede size dönüş yapacağız.');
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

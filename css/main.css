@@ -1,0 +1,17 @@
+/* main.css - Tüm sayfaların ortak CSS dosyalarını içe aktarır */
+
+/* Temel stil tanımlamaları */
+@import url('base.css');
+@import url('footer_updated.css'); /* Güncellenmiş footer stilleri */
+@import url('mobile-menu.css');
+
+/* Sayfa özel stilleri */
+@import url('index.css');
+@import url('about.css');
+@import url('discover.css');
+@import url('story.css');
+@import url('today.css');
+@import url('contact.css');
+@import url('content_system.css');
+@import url('post_detail.css');
+@import url('forum.css'); /* Forum sayfası stilleri */

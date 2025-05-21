@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Hikaye Portalı</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+    <!-- Header yüklenecek -->
+    <div id="header-container"></div>
+
+    <main class="container">
+        <!-- Profil Üst Bilgi Alanı -->
+        <section class="profile-header-section">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <div class="avatar-circle">
+                        <span id="profile-initial">A</span>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h1 id="profile-username" class="profile-name">Kullanıcı Adı</h1>
+                    <p id="profile-bio" class="profile-bio">Kullanıcı biyografisi burada görünecek.</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span id="post-count" class="stat-value">0</span>
+                            <span class="stat-label">Gönderi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <a href="post_editor.html" class="btn btn-primary">Yeni Gönderi</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profil İçerik Alanı -->
+        <section class="profile-content-section">
+            <div class="profile-tabs">
+                <button class="tab-button active" data-tab="my-posts">Gönderilerim</button>
+                <button class="tab-button" data-tab="profile-info">Profil Bilgileri</button>
+                <button class="tab-button" data-tab="change-password">Şifre Değiştir</button>
+                <button class="tab-button" data-tab="delete-account">Hesabı Sil</button>
+            </div>
+            
+            <div class="alert alert-error" id="error-message" style="display: none;"></div>
+            <div class="alert alert-success" id="success-message" style="display: none;"></div>
+                
+                <div class="tab-content active" id="my-posts">
+                    <div class="my-posts-container">
+                        <div class="posts-header">
+                            <h2>Gönderilerim</h2>
+                            <a href="post_editor.html" class="btn btn-sm btn-primary">Yeni Gönderi Ekle</a>
+                        </div>
+                        
+                        <div id="posts-grid" class="posts-grid">
+                            <!-- Gönderiler JavaScript ile yüklenecek -->
+                            <div class="no-posts-message" id="no-posts-message">
+                                <p>Henüz hiç gönderi oluşturmadınız.</p>
+                                <a href="post_editor.html" class="btn btn-primary">İlk Gönderinizi Oluşturun</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="profile-info">
+                    <form id="profile-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="username">Kullanıcı Adı</label>
+                            <input type="text" id="username" name="username" disabled>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="real_name">Gerçek Adınız</label>
+                            <input type="text" id="real_name" name="real_name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-posta Adresi</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age">Yaşınız</label>
+                            <input type="number" id="age" name="age" min="13" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Profili Güncelle</button>
+                    </form>
+                </div>
+                
+                <div class="tab-content" id="change-password">
+                    <form id="password-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="current_password">Mevcut Şifre</label>
+                            <input type="password" id="current_password" name="current_password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_password">Yeni Şifre</label>
+                            <input type="password" id="new_password" name="new_password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password">Yeni Şifre Tekrar</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Şifreyi Değiştir</button>
+                    </form>
+                </div>
+                
+                <div class="tab-content" id="delete-account">
+                    <div class="delete-account-warning">
+                        <h3>Dikkat!</h3>
+                        <p>Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm verileriniz kalıcı olarak silinecektir.</p>
+                    </div>
+                    
+                    <form id="delete-account-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="delete_password">Şifrenizi Girin</label>
+                            <input type="password" id="delete_password" name="delete_password" required>
+                        </div>
+                        
+                        <div class="form-group form-checkbox">
+                            <input type="checkbox" id="confirm_delete" name="confirm_delete" required>
+                            <label for="confirm_delete">Hesabımı silmek istediğimi onaylıyorum</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-danger btn-block">Hesabımı Sil</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer yüklenecek -->
+    <div id="footer-container"></div>
+
+    <script src="header-loader.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

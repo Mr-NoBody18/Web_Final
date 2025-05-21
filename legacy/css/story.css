@@ -1,0 +1,453 @@
+/* story.css - Hikaye Sayfası Özel Stilleri */
+
+/* Hikaye Konteyneri */
+.story-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Hikaye Başlık ve Meta Bilgileri */
+.story-header {
+    margin-bottom: 30px;
+}
+
+.story-category {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.story-title {
+    font-size: 36px;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+.story-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.story-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: linear-gradient(45deg, var(--accent-brown), var(--accent-purple));
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.story-date {
+    color: var(--text-secondary);
+}
+
+.story-stats {
+    display: flex;
+    gap: 15px;
+}
+
+/* Hikaye Kapak Görseli */
+.story-featured-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+/* Hikaye İçeriği - Editor Workspace Stili */
+.editor-workspace-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-workspace {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Editor Sayfası */
+.editor-page {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 600px;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+    z-index: 1;
+    display: block;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* Editor Blokları */
+.editor-block {
+    position: absolute;
+    background: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: none;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* Metin Bloğu */
+.text-block {
+
+}
+
+.text-block-content {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    outline: none;
+    overflow: visible;
+    color: var(--text-secondary);
+}
+
+/* Görsel Bloğu */
+.image-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+}
+
+.image-block img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Hikaye Etiketleri */
+.story-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.story-tag {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.story-tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* Hikaye Etkileşim Butonları */
+.story-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.action-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 8px 15px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.share-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Benzer Hikayeler */
+.related-stories {
+    margin-top: 50px;
+}
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Yorumlar Bölümü */
+.comments-section {
+    margin-top: 50px;
+}
+
+.comments-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.comment-input {
+    width: 100%;
+    min-height: 100px;
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--text-primary);
+    font-size: 16px;
+    resize: vertical;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+}
+
+.comment-button {
+    align-self: flex-end;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-purple));
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.comment-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment {
+    display: flex;
+    gap: 15px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex-grow: 1;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.comment-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.comment-text {
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Hata Mesajı */
+.error-message {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.error-message h2 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.error-message p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.error-message .btn {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-purple));
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.error-message .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Kategori Renkleri */
+.category-technology {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.category-travel {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.category-food {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+.category-lifestyle {
+    background: linear-gradient(90deg, #9b59b6, #8e44ad);
+}
+
+.category-art {
+    background: linear-gradient(90deg, #f1c40f, #f39c12);
+}
+
+.category-science {
+    background: linear-gradient(90deg, #1abc9c, #16a085);
+}
+
+.category-other {
+    background: linear-gradient(90deg, #95a5a6, #7f8c8d);
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .story-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .story-stats {
+        margin-top: 10px;
+    }
+    
+    .story-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .action-buttons, .share-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .comment-button {
+        width: 100%;
+    }
+}

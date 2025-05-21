@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikayePortalı - Ana Sayfa</title>
+    <link rel="stylesheet" href="css/main.css">    <script src="header-loader.js"></script>
+    <script src="static-data-handler.js"></script>
+    <script src="mobile-nav.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Static data handler ile hikayeleri yükle
+            fetchStories();
+            
+            // StaticDataHandler ile hikayeleri getir
+            async function fetchStories() {
+                try {
+                    const stories = await staticData.getStories({limit: 6, sort: 'newest'});
+                    renderStories(stories);
+                } catch (error) {
+                    console.error('Hikaye yükleme hatası:', error);
+                    document.querySelector('.card-grid').innerHTML = `
+                        <div class="error-message">
+                            <h2>Hikayeler Yüklenemedi</h2>
+                            <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Hikayeleri render et
+            function renderStories(stories) {
+                const cardGrid = document.querySelector('.card-grid');
+                
+                // Yükleniyor göstergesini kaldır
+                cardGrid.innerHTML = '';
+                
+                if (stories.length === 0) {
+                    cardGrid.innerHTML = '<div class="no-content"><p>Henüz hikaye bulunmuyor.</p></div>';
+                    return;
+                }
+                
+                // Hikayeleri DOM'a ekle
+                stories.forEach(story => {
+                    const storyCard = createStoryCard(story);
+                    cardGrid.appendChild(storyCard);
+                });
+            }
+                
+            // Hikaye kartı oluştur
+            function createStoryCard(story) {
+                const card = document.createElement('div');
+                card.className = 'content-card';
+                card.dataset.category = story.category;
+                
+                // Hikaye içeriğini parse et
+                let contentData;
+                try {
+                    contentData = JSON.parse(story.content);
+                } catch (error) {
+                    console.error('İçerik ayrıştırma hatası:', error);
+                    contentData = { pages: [] };
+                }
+                
+                // Hikaye kartı HTML'ini oluştur
+                card.innerHTML = `
+                    <img src="${story.image_url || 'https://via.placeholder.com/800x400?text=Hikaye+Görseli'}" alt="${story.title}" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-${story.category}">${getCategoryName(story.category)}</div>
+                        <h3 class="card-title">${story.title}</h3>
+                        <p class="card-description">${getStoryDescription(contentData)}</p>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">${formatDate(story.created_at)}</div>
+                            <div class="card-stats">
+                                <span>👁️ ${story.view_count}</span>
+                                <span>❤️ ${story.like_count}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Hikaye detay sayfasına yönlendirme
+                card.addEventListener('click', function() {
+                    window.location.href = `/story.html?id=${story.id}`;
+                });
+                
+                return card;
+            }
+            
+            // Hikaye açıklaması oluştur
+            function getStoryDescription(contentData) {
+                if (!contentData.pages || contentData.pages.length === 0) {
+                    return 'Bu hikaye için açıklama bulunmuyor.';
+                }
+                
+                // İlk sayfadaki ilk metin bloğunu bul
+                const firstPage = contentData.pages[0];
+                const textBlocks = firstPage.blocks.filter(block => block.type === 'text');
+                
+                if (textBlocks.length === 0) {
+                    return 'Bu hikaye için açıklama bulunmuyor.';
+                }
+                
+                // İlk metin bloğunun içeriğini al ve HTML etiketlerini temizle
+                const textContent = textBlocks[0].content.replace(/<[^>]*>/g, '');
+                
+                // Metni kısalt
+                return textContent.length > 150 ? textContent.substring(0, 150) + '...' : textContent;
+            }
+            
+            // Tarih formatla
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('tr-TR', options);
+            }
+            
+            // Kategori adını getir
+            function getCategoryName(category) {
+                const categoryNames = {
+                    'disasters': 'Felaketler',
+                    'cars': 'Arabalar',
+                    'historic': 'Tarihi Mekanlar',
+                    'creepy': 'Creepy Hikayeler',
+                    'science': 'Bilim',
+                    'tech': 'Teknoloji'
+                };
+                
+                return categoryNames[category] || category;
+            }
+        });
+    </script>
+</head>
+<body>
+    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <!-- Ana Sayfa İçeriği -->
+    <main class="container">
+        <!-- Hero Bölümü -->
+        <section class="hero-section">
+            <h1 class="section-title">Keşfedilecek Hikayeler</h1>
+            
+            <div class="today-in-history">
+                <p class="today-date">14 Mart 2025 - Bugün Tarihte</p>
+                <h2 class="history-event">1986 - <strong>Avrupa Para Birimi (ECU)</strong> Avrupa Topluluğu'nun resmi para birimi olarak onaylandı.</h2>
+            </div>
+        </section>
+
+        <!-- Öne Çıkan İçerikler -->
+        <section>
+            <h2 class="section-title">Öne Çıkanlar</h2>
+            
+            <div class="card-grid">
+                <!-- Çernobil Örneği -->
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1580655653885-65763b2597d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Çernobil Nükleer Felaketi" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-disasters">Felaketler</div>
+                        <h3 class="card-title">Çernobil Nükleer Felaketi: İnsanlık Tarihinin En Büyük Nükleer Kazası</h3>
+                        <p class="card-description">26 Nisan 1986'da Ukrayna'nın Pripyat şehrinde meydana gelen ve dünya tarihinin en büyük nükleer felaketlerinden biri olan Çernobil kazasının ayrıntılı analizi.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Teknik Bilgiler</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Tarih: </span>
+                                    <span class="info-value">26 Nisan 1986</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">Pripyat, Ukrayna</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Reaktör Tipi: </span>
+                                    <span class="info-value">RBMK-1000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Radyasyon Salınımı: </span>
+                                    <span class="info-value">5.2 milyon TBq</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">15 Şubat 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 12.3K</span>
+                                <span>💬 245</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ferrari F40 Örneği -->
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1592198084033-aade902d1aae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Ferrari F40" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-cars">Arabalar</div>
+                        <h3 class="card-title">Ferrari F40: Efsanenin Son Şaheseri</h3>
+                        <p class="card-description">Ferrari'nin 40. yıldönümünde ürettiği ve kurucusu Enzo Ferrari'nin son onayladığı süper otomobil F40'ın hikayesi ve teknik detayları.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Teknik Özellikler</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Üretim Yılları: </span>
+                                    <span class="info-value">1987-1992</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Motor: </span>
+                                    <span class="info-value">2.9L Twin-Turbo V8</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Güç: </span>
+                                    <span class="info-value">478 HP</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">0-100 km/s: </span>
+                                    <span class="info-value">4.1 saniye</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">2 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 8.7K</span>
+                                <span>💬 178</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Creepy Hikaye Örneği -->
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Rüya Avcısı" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-creepy">Creepy Hikayeler</div>
+                        <h3 class="card-title">Rüya Avcısı: Köyün Karanlık Sırrı</h3>
+                        <p class="card-description">Küçük bir dağ köyünde yaşayanların rüyalarında gördükleri karanlık figürün peşine düşen bir araştırmacının yaşadığı paranormal olaylar.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Hikaye Detayları</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Tür: </span>
+                                    <span class="info-value">Paranormal/Korku</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">Karadeniz Dağları</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Uzunluk: </span>
+                                    <span class="info-value">12 dakika</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Uyarı: </span>
+                                    <span class="info-value">Yüksek Gerilim</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">8 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 15.6K</span>
+                                <span>💬 432</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Son Eklenenler Bölümü -->
+        <section>
+            <h2 class="section-title">Son Eklenenler</h2>
+            
+            <div class="card-grid">
+                <!-- Tarihi Mekan Örneği -->
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1545424436-1be2b5c0d0fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Ayasofya" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-historic">Tarihi Mekanlar</div>
+                        <h3 class="card-title">Ayasofya: Bin Yıllık İhtişamın Hikayesi</h3>
+                        <p class="card-description">İstanbul'un kalbinde yer alan, farklı medeniyetlere ve inançlara ev sahipliği yapmış olan Ayasofya'nın etkileyici tarihi ve mimari özellikleri.</p>
+                        <div class="info-box">
+                            <h4 class="info-title">Yapı Bilgileri</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">İnşa Tarihi: </span>
+                                    <span class="info-value">537</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Mimar: </span>
+                                    <span class="info-value">Anthemius ve Isidorus</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">İstanbul, Türkiye</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Kubbe Yüksekliği: </span>
+                                    <span class="info-value">55.6 metre</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">12 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 5.2K</span>
+                                <span>💬 87</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bilim Örneği -->
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1614935151651-0bea6508db6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="James Webb Teleskobu" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-science">Bilim</div>
+                        <h3 class="card-title">James Webb Teleskobu: Evrenin Derinliklerine Yolculuk</h3>
+                        <p class="card-description">NASA'nın Hubble'ın halefi olarak geliştirdiği James Webb Uzay Teleskobu'nun teknolojik özellikleri ve uzayın gizemlerini çözmek için yapacağı katkılar.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Teknik Özellikler</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Fırlatılış: </span>
+                                    <span class="info-value">25 Aralık 2021</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Ayna Çapı: </span>
+                                    <span class="info-value">6.5 metre</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Maliyet: </span>
+                                    <span class="info-value">10 milyar dolar</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">L2 Lagrange Noktası</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">10 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 7.8K</span>
+                                <span>💬 156</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teknoloji Örneği -->
+                <div class="content-card">
+                    <img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Yapay Zeka" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-tech">Teknoloji</div>
+                        <h3 class="card-title">Yapay Zeka Çağı: İnsanlığın Geleceğini Şekillendiren Teknoloji</h3>
+                        <p class="card-description">Yapay zekanın tarihsel gelişimi, günümüzdeki uygulamaları ve gelecekte hayatımızı nasıl değiştireceğine dair kapsamlı bir inceleme.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Önemli Dönüm Noktaları</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">İlk YZ Terimi: </span>
+                                    <span class="info-value">1956</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Deep Blue: </span>
+                                    <span class="info-value">1997</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">GPT Modeli: </span>
+                                    <span class="info-value">2018</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Pazar Değeri: </span>
+                                    <span class="info-value">1.5 trilyon dolar</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">9 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 9.4K</span>
+                                <span>💬 203</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Anasayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="#">Macera</a></li>
+                            <li><a href="#">Romantik</a></li>
+                            <li><a href="#">Bilim Kurgu</a></li>
+                            <li><a href="#">Fantastik</a></li>
+                            <li><a href="#">Korku</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Yasal</h3>
+                        <ul>
+                            <li><a href="#">Kullanım Şartları</a></li>
+                            <li><a href="#">Gizlilik Politikası</a></li>
+                            <li><a href="#">Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <!-- Chatbot Entegrasyonu -->
+    <script src="chatbot.js"></script>
+</body>
+</html>

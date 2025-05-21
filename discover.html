@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikayePortalı - Keşfet</title>
+    <link rel="stylesheet" href="css/main.css">    <script src="static-data-handler.js"></script>
+    <script src="header-loader.js"></script>
+    <script src="mobile-nav.js"></script>
+</head>
+<body>
+    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <!-- Keşfet Sayfası İçeriği -->
+    <main class="container">
+        <!-- Hero Bölümü -->
+        <section class="hero-section">
+            <h1 class="section-title">Hikayeleri Keşfet</h1>
+            
+            <div class="discover-intro">
+                <p>Farklı kategorilerdeki hikayeleri keşfedin, ilginizi çeken konularda yeni bilgiler edinin.</p>
+            </div>
+            
+            <!-- Arama Motoru -->
+            <div class="search-container">
+                <div class="search-bar active">
+                    <input type="text" placeholder="Hikaye ara..." id="search-input">
+                </div>
+                <button class="search-button" id="search-button">
+                    <span class="search-icon">🔍</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Filtreleme Bölümü -->
+        <section class="filter-section">
+            <div class="filter-container">
+                <h3 class="filter-title">Kategoriler</h3>
+                <div class="filter-options">
+                    <button class="filter-button active" data-category="all">Tümü</button>
+                    <button class="filter-button" data-category="disasters">Felaketler</button>
+                    <button class="filter-button" data-category="cars">Arabalar</button>
+                    <button class="filter-button" data-category="historic">Tarihi Mekanlar</button>
+                    <button class="filter-button" data-category="creepy">Creepy Hikayeler</button>
+                    <button class="filter-button" data-category="science">Bilim</button>
+                    <button class="filter-button" data-category="tech">Teknoloji</button>
+                </div>
+            </div>
+            
+            <div class="sort-container">
+                <h3 class="filter-title">Sıralama</h3>
+                <div class="filter-options">
+                    <button class="sort-button active" data-sort="popular">Popüler</button>
+                    <button class="sort-button" data-sort="newest">En Yeni</button>
+                    <button class="sort-button" data-sort="oldest">En Eski</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tüm Hikayeler -->
+        <section>
+            <h2 class="section-title">Keşfet</h2>
+            
+            <div class="card-grid">
+                <!-- Çernobil Örneği -->
+                <div class="content-card" data-category="disasters">
+                    <img src="https://images.unsplash.com/photo-1580655653885-65763b2597d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Çernobil Nükleer Felaketi" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-disasters">Felaketler</div>
+                        <h3 class="card-title">Çernobil Nükleer Felaketi: İnsanlık Tarihinin En Büyük Nükleer Kazası</h3>
+                        <p class="card-description">26 Nisan 1986'da Ukrayna'nın Pripyat şehrinde meydana gelen ve dünya tarihinin en büyük nükleer felaketlerinden biri olan Çernobil kazasının ayrıntılı analizi.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Teknik Bilgiler</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Tarih: </span>
+                                    <span class="info-value">26 Nisan 1986</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">Pripyat, Ukrayna</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Reaktör Tipi: </span>
+                                    <span class="info-value">RBMK-1000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Radyasyon Salınımı: </span>
+                                    <span class="info-value">5.2 milyon TBq</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">15 Şubat 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 12.3K</span>
+                                <span>💬 245</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ferrari F40 Örneği -->
+                <div class="content-card" data-category="cars">
+                    <img src="https://images.unsplash.com/photo-1592198084033-aade902d1aae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Ferrari F40" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-cars">Arabalar</div>
+                        <h3 class="card-title">Ferrari F40: Efsanenin Son Şaheseri</h3>
+                        <p class="card-description">Ferrari'nin 40. yıldönümünde ürettiği ve kurucusu Enzo Ferrari'nin son onayladığı süper otomobil F40'ın hikayesi ve teknik detayları.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Teknik Özellikler</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Üretim Yılları: </span>
+                                    <span class="info-value">1987-1992</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Motor: </span>
+                                    <span class="info-value">2.9L Twin-Turbo V8</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Güç: </span>
+                                    <span class="info-value">478 HP</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">0-100 km/s: </span>
+                                    <span class="info-value">4.1 saniye</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">2 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 8.7K</span>
+                                <span>💬 178</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Creepy Hikaye Örneği -->
+                <div class="content-card" data-category="creepy">
+                    <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Rüya Avcısı" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-creepy">Creepy Hikayeler</div>
+                        <h3 class="card-title">Rüya Avcısı: Köyün Karanlık Sırrı</h3>
+                        <p class="card-description">Küçük bir dağ köyünde yaşayanların rüyalarında gördükleri karanlık figürün peşine düşen bir araştırmacının yaşadığı paranormal olaylar.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Hikaye Detayları</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Tür: </span>
+                                    <span class="info-value">Paranormal/Korku</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">Karadeniz Dağları</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Uzunluk: </span>
+                                    <span class="info-value">12 dakika</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Uyarı: </span>
+                                    <span class="info-value">Yüksek Gerilim</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">8 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 15.6K</span>
+                                <span>💬 432</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Göbeklitepe Örneği -->
+                <div class="content-card" data-category="historic">
+                    <img src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Göbeklitepe" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-historic">Tarihi Mekanlar</div>
+                        <h3 class="card-title">Göbeklitepe: İnsanlık Tarihini Yeniden Yazan Keşif</h3>
+                        <p class="card-description">Şanlıurfa'da bulunan ve 12.000 yıllık geçmişiyle bilinen en eski tapınak kompleksi olan Göbeklitepe'nin keşif hikayesi ve arkeolojik önemi.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Arkeolojik Bilgiler</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Keşif Tarihi: </span>
+                                    <span class="info-value">1994</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Yaş: </span>
+                                    <span class="info-value">~12.000 yıl</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Konum: </span>
+                                    <span class="info-value">Şanlıurfa, Türkiye</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">UNESCO Listesi: </span>
+                                    <span class="info-value">2018</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">10 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 7.4K</span>
+                                <span>💬 156</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kuantum Bilgisayarlar Örneği -->
+                <div class="content-card" data-category="science">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Kuantum Bilgisayarlar" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-science">Bilim</div>
+                        <h3 class="card-title">Kuantum Bilgisayarlar: Geleceğin Hesaplama Teknolojisi</h3>
+                        <p class="card-description">Klasik bilgisayarlardan yüzlerce kat daha hızlı işlem yapabilen kuantum bilgisayarların çalışma prensipleri ve gelecekteki potansiyel uygulamaları.</p>
+                        
+                        <div class="info-box">
+                            <h4 class="info-title">Teknik Detaylar</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Kubit Sayısı: </span>
+                                    <span class="info-value">127 (2023)</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Çalışma Sıcaklığı: </span>
+                                    <span class="info-value">-273.14°C</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Hız Avantajı: </span>
+                                    <span class="info-value">~100 milyon kat</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Kullanım Alanları: </span>
+                                    <span class="info-value">Kriptografi, İlaç Keşfi</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">5 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 9.1K</span>
+                                <span>💬 203</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Yapay Zeka Örneği -->
+                <div class="content-card" data-category="tech">
+                    <img src="https://images.unsplash.com/photo-1488229297570-58520851e868?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Yapay Zeka" class="card-image">
+                    <div class="card-content">
+                        <div class="card-category category-tech">Teknoloji</div>
+                        <h3 class="card-title">Yapay Zeka: İnsan Zekasını Taklit Eden Teknoloji</h3>
+                        <p class="card-description">Yapay zekanın tarihsel gelişimi, günümüzdeki uygulamaları ve gelecekte insanlığı nasıl etkileyebileceğine dair kapsamlı bir inceleme.</p>
+                        <div class="info-box">
+                            <h4 class="info-title">Yapay Zeka Türleri</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Dar YZ: </span>
+                                    <span class="info-value">Tek görev odaklı</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Genel YZ: </span>
+                                    <span class="info-value">İnsan seviyesi</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Süper YZ: </span>
+                                    <span class="info-value">İnsan üstü</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">İlk YZ Çalışması: </span>
+                                    <span class="info-value">1956</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="card-date">11 Mart 2025</div>
+                            <div class="card-stats">
+                                <span>👁️ 14.2K</span>
+                                <span>💬 367</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Anasayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="#">Macera</a></li>
+                            <li><a href="#">Romantik</a></li>
+                            <li><a href="#">Bilim Kurgu</a></li>
+                            <li><a href="#">Fantastik</a></li>
+                            <li><a href="#">Korku</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Yasal</h3>
+                        <ul>
+                            <li><a href="#">Kullanım Şartları</a></li>
+                            <li><a href="#">Gizlilik Politikası</a></li>
+                            <li><a href="#">Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="discover.js"></script>
+</body>
+</html>

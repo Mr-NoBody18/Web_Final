@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HikayePortalı - İçerik Düzenleyici</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="./css/editor.css">
+    <script src="../header-loader.js"></script>
+    <script src="../mobile-nav.js"></script>
+</head>
+<body>
+    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <!-- Düzenleyici Ana Bölümü -->
+    <main class="container editor-container">
+        <h1 class="section-title">Hikaye Düzenleyici</h1>
+        
+        <!-- Düzenleyici Araç Çubuğu -->
+        <div class="editor-toolbar">
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-action="add-text" title="Metin Bloğu Ekle">
+                    <i class="toolbar-icon">📝</i> Metin
+                </button>
+                <button class="toolbar-btn" data-action="add-image" title="Görsel Bloğu Ekle">
+                    <i class="toolbar-icon">🖼️</i> Görsel
+                </button>
+            </div>
+            
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-action="toggle-grid" title="Izgarayı Göster/Gizle">
+                    <i class="toolbar-icon">📏</i> Izgara
+                </button>
+                <div class="grid-size-control">
+                    <label for="grid-size-input">Izgara Boyutu:</label>
+                    <input type="number" id="grid-size-input" min="5" max="50" value="20" class="grid-size-input">
+                </div>
+                <button class="toolbar-btn" data-action="undo" title="Geri Al">
+                    <i class="toolbar-icon">↩️</i> Geri
+                </button>
+                <button class="toolbar-btn" data-action="redo" title="İleri Al">
+                    <i class="toolbar-icon">↪️</i> İleri
+                </button>
+            </div>
+            
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-action="background-color" title="Arka Plan Rengi">
+                    <i class="toolbar-icon">🎨</i> Arka Plan
+                </button>
+                <input type="color" id="background-color-picker" class="hidden-input">
+            </div>
+            
+            <div class="toolbar-group toolbar-actions">
+                <button class="toolbar-btn preview-button" title="Önizleme">
+                    <i class="toolbar-icon">👁️</i> Önizleme
+                </button>
+                <button class="toolbar-btn save-button" title="Kaydet">
+                    <i class="toolbar-icon">💾</i> Kaydet
+                </button>
+            </div>
+        </div>
+        
+        <!-- Sayfa Sekmeleri -->
+        <div class="editor-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-page="1">Sayfa 1</button>
+            </div>
+            <button class="add-page-button" title="Yeni Sayfa Ekle">+</button>
+        </div>
+        
+        <!-- Düzenleyici Çalışma Alanı -->
+        <div class="editor-workspace-container">
+            <div class="editor-workspace">
+                <div class="editor-page" data-page="1"></div>
+            </div>
+        </div>
+        
+        <!-- Blok Özellikleri Paneli -->
+        <div class="block-properties-panel">
+            <h3 class="panel-title">Blok Özellikleri</h3>
+            
+            <!-- Blok Seçilmediğinde -->
+            <div class="no-block-selected">
+                <p>Düzenlemek için bir blok seçin</p>
+            </div>
+            
+            <!-- Metin Bloğu Özellikleri -->
+            <div class="text-block-properties" style="display: none;">
+                <div class="property-group">
+                    <h4>Metin Formatı</h4>
+                    <div class="property-controls">
+                        <select id="text-font-family" class="property-select">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                        </select>
+                        
+                        <div class="property-row">
+                            <select id="text-font-size" class="property-select">
+                                <option value="12px">12px</option>
+                                <option value="14px">14px</option>
+                                <option value="16px" selected>16px</option>
+                                <option value="18px">18px</option>
+                                <option value="20px">20px</option>
+                                <option value="24px">24px</option>
+                                <option value="28px">28px</option>
+                                <option value="32px">32px</option>
+                                <option value="36px">36px</option>
+                                <option value="42px">42px</option>
+                                <option value="48px">48px</option>
+                            </select>
+                            
+                            <div class="format-buttons">
+                                <button id="text-bold" class="format-btn" title="Kalın">
+                                    <i class="format-icon">B</i>
+                                </button>
+                                <button id="text-italic" class="format-btn" title="İtalik">
+                                    <i class="format-icon">I</i>
+                                </button>
+                                <button id="text-underline" class="format-btn" title="Altı Çizili">
+                                    <i class="format-icon">U</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Metin Hizalama</h4>
+                    <div class="property-controls alignment-controls">
+                        <button id="align-left" class="alignment-btn" title="Sola Hizala">
+                            <i class="alignment-icon">⫷</i>
+                        </button>
+                        <button id="align-center" class="alignment-btn" title="Ortala">
+                            <i class="alignment-icon">≡</i>
+                        </button>
+                        <button id="align-right" class="alignment-btn" title="Sağa Hizala">
+                            <i class="alignment-icon">⫸</i>
+                        </button>
+                        <button id="align-justify" class="alignment-btn" title="İki Yana Yasla">
+                            <i class="alignment-icon">≣</i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Metin Rengi</h4>
+                    <div class="property-controls">
+                        <input type="color" id="text-color" value="#ffffff" class="color-picker">
+                        <span class="color-value">#ffffff</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Görsel Bloğu Özellikleri -->
+            <div class="image-block-properties" style="display: none;">
+                <div class="property-group">
+                    <h4>Görsel Ayarları</h4>
+                    <div class="property-controls">
+                        <button id="change-image" class="property-btn">
+                            <i class="property-icon">🖼️</i> Görseli Değiştir
+                        </button>
+                        <input type="file" id="image-upload" class="hidden-input" accept="image/*">
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Görsel Boyutu</h4>
+                    <div class="property-controls">
+                        <label for="image-width">Genişlik:</label>
+                        <input type="number" id="image-width" class="size-input" min="10" max="1000">
+                        <label for="image-height">Yükseklik:</label>
+                        <input type="number" id="image-height" class="size-input" min="10" max="1000">
+                        <div class="checkbox-control">
+                            <input type="checkbox" id="maintain-aspect-ratio" checked>
+                            <label for="maintain-aspect-ratio">En-boy oranını koru</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Görsel Hizalama</h4>
+                    <div class="property-controls alignment-controls">
+                        <button id="image-align-left" class="alignment-btn" title="Sola Hizala">
+                            <i class="alignment-icon">⫷</i>
+                        </button>
+                        <button id="image-align-center" class="alignment-btn" title="Ortala">
+                            <i class="alignment-icon">≡</i>
+                        </button>
+                        <button id="image-align-right" class="alignment-btn" title="Sağa Hizala">
+                            <i class="alignment-icon">⫸</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ortak Blok Özellikleri -->
+            <div class="common-block-properties" style="display: none;">
+                <div class="property-group">
+                    <h4>Blok Konumu ve Boyutu</h4>
+                    <div class="property-controls">
+                        <div class="property-row">
+                            <label for="block-x">X:</label>
+                            <input type="number" id="block-x" class="position-input" min="0">
+                            <label for="block-y">Y:</label>
+                            <input type="number" id="block-y" class="position-input" min="0">
+                        </div>
+                        <div class="property-row">
+                            <label for="block-width">Genişlik:</label>
+                            <input type="number" id="block-width" class="size-input" min="50">
+                            <label for="block-height">Yükseklik:</label>
+                            <input type="number" id="block-height" class="size-input" min="50">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Blok Arka Planı</h4>
+                    <div class="property-controls">
+                        <div class="checkbox-control">
+                            <input type="checkbox" id="block-background-enabled">
+                            <label for="block-background-enabled">Arka plan rengini etkinleştir</label>
+                        </div>
+                        <input type="color" id="block-background-color" value="#333333" class="color-picker" disabled>
+                        <span class="color-value">#333333</span>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Blok Kenarlığı</h4>
+                    <div class="property-controls">
+                        <div class="checkbox-control">
+                            <input type="checkbox" id="block-border-enabled">
+                            <label for="block-border-enabled">Kenarlığı etkinleştir</label>
+                        </div>
+                        <div class="property-row">
+                            <select id="block-border-width" class="property-select" disabled>
+                                <option value="1px">1px</option>
+                                <option value="2px">2px</option>
+                                <option value="3px">3px</option>
+                                <option value="4px">4px</option>
+                                <option value="5px">5px</option>
+                            </select>
+                            <select id="block-border-style" class="property-select" disabled>
+                                <option value="solid">Düz</option>
+                                <option value="dashed">Kesikli</option>
+                                <option value="dotted">Noktalı</option>
+                                <option value="double">Çift</option>
+                            </select>
+                        </div>
+                        <input type="color" id="block-border-color" value="#666666" class="color-picker" disabled>
+                        <span class="color-value">#666666</span>
+                    </div>
+                </div>
+                
+                <div class="property-group">
+                    <h4>Blok Gölgesi</h4>
+                    <div class="property-controls">
+                        <div class="checkbox-control">
+                            <input type="checkbox" id="block-shadow-enabled">
+                            <label for="block-shadow-enabled">Gölgeyi etkinleştir</label>
+                        </div>
+                        <div class="property-row">
+                            <label for="block-shadow-x">X:</label>
+                            <input type="number" id="block-shadow-x" class="shadow-input" value="0" disabled>
+                            <label for="block-shadow-y">Y:</label>
+                            <input type="number" id="block-shadow-y" class="shadow-input" value="0" disabled>
+                        </div>
+                        <div class="property-row">
+                            <label for="block-shadow-blur">Bulanıklık:</label>
+                            <input type="number" id="block-shadow-blur" class="shadow-input" value="10" min="0" disabled>
+                            <label for="block-shadow-spread">Yayılma:</label>
+                            <input type="number" id="block-shadow-spread" class="shadow-input" value="0" disabled>
+                        </div>
+                        <input type="color" id="block-shadow-color" value="#000000" class="color-picker" disabled>
+                        <span class="color-value">#000000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>HikayePortalı</h2>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Keşfet</h3>
+                        <ul>
+                            <li><a href="../index.html">Ana Sayfa</a></li>
+                            <li><a href="../discover.html">Keşfet</a></li>
+                            <li><a href="../today.html">Bugün</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Hakkımızda</h3>
+                        <ul>
+                            <li><a href="../about.html">Biz Kimiz</a></li>
+                            <li><a href="../contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="./editor.js"></script>
+</body>
+</html>

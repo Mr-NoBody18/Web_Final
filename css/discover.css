@@ -1,0 +1,131 @@
+/* discover.css - Keşfet Sayfası Özel Stilleri */
+
+.discover-intro {
+    max-width: 800px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.search-bar.active {
+    flex: 1;
+    max-width: 600px;
+}
+
+.search-button {
+    background: linear-gradient(45deg, var(--accent-red), var(--accent-purple));
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.search-button:hover {
+    transform: scale(1.1);
+}
+
+/* Filtreleme Bölümü */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.filter-container, .sort-container {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 15px 20px;
+    border: 1px solid var(--glass-border);
+}
+
+.filter-title, .sort-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.filter-options, .sort-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-button, .sort-button {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.filter-button:hover, .sort-button:hover,
+.filter-button.active, .sort-button.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.filter-button[data-category="disasters"].active {
+    background: rgba(255, 140, 0, 0.2);
+    color: var(--accent-orange);
+    border-color: var(--accent-orange);
+}
+
+.filter-button[data-category="cars"].active {
+    background: rgba(255, 77, 77, 0.2);
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+}
+
+.filter-button[data-category="historic"].active {
+    background: rgba(212, 175, 55, 0.2);
+    color: var(--accent-brown);
+    border-color: var(--accent-brown);
+}
+
+.filter-button[data-category="creepy"].active {
+    background: rgba(147, 112, 219, 0.2);
+    color: var(--accent-purple);
+    border-color: var(--accent-purple);
+}
+
+/* Sonuç Sayısı */
+.results-count {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.results-count strong {
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-container, .sort-container {
+        width: 100%;
+    }
+}

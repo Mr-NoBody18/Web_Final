@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HikayePortalı - Gönderi Oluştur</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/post_editor.css">
+    <script src="../header-loader.js"></script>
+    <script src="../mobile-nav.js"></script>
+</head>
+<body>
+    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-placeholder"></div>
+
+    <!-- Gönderi Oluşturma Ana Bölümü -->
+    <main class="container">
+        <div class="post-editor-container">
+            <h1 class="section-title">Gönderi Oluştur</h1>
+            
+            <!-- Gönderi Başlık ve Meta Bilgileri -->
+            <div class="post-meta-editor">
+                <div class="form-group">
+                    <label for="post-title">Başlık</label>
+                    <input type="text" id="post-title" class="form-input" placeholder="Gönderiniz için çekici bir başlık yazın...">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-category">Kategori</label>
+                        <select id="post-category" class="form-select">
+                            <option value="">Kategori Seçin</option>
+                            <option value="technology">Teknoloji</option>
+                            <option value="travel">Seyahat</option>
+                            <option value="food">Yemek</option>
+                            <option value="lifestyle">Yaşam Tarzı</option>
+                            <option value="art">Sanat</option>
+                            <option value="science">Bilim</option>
+                            <option value="other">Diğer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-tags">Etiketler <span class="input-hint">(Maks. 250 karakter)</span></label>
+                        <input type="text" id="post-tags" class="form-input" placeholder="Etiketleri virgülle ayırın..." maxlength="250">
+                        <div class="char-counter" id="tags-char-counter">0/250</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-cover">Kapak Görseli</label>
+                    <div class="cover-upload-container">
+                        <div id="cover-preview" class="cover-preview">
+                            <div class="upload-placeholder">
+                                <i class="upload-icon">🖼️</i>
+                                <span>Kapak görseli yüklemek için tıklayın veya sürükleyin</span>
+                            </div>
+                        </div>
+                        <input type="file" id="post-cover" class="file-input" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- İçerik Düzenleme Alanı -->
+            <div class="content-editor">
+                <h2 class="content-section-title">İçerik</h2>
+                
+                <!-- Önizleme Modu Düğmesi -->
+                <button class="preview-toggle" id="preview-toggle">
+                    <i class="preview-icon">👁️</i> Önizleme Modu
+                </button>
+                
+                <!-- İçerik Blokları Araç Çubuğu -->
+                <div class="content-toolbar">
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-action="add-full-block" title="Tam Genişlik Blok">
+                            <i class="toolbar-icon">➕</i> Tam Genişlik Blok
+                        </button>
+                        <button class="toolbar-btn" data-action="add-split-block" title="Bölünmüş Blok">
+                            <i class="toolbar-icon">⏹️</i> Bölünmüş Blok
+                        </button>
+                        <button class="toolbar-btn" data-action="add-gallery-block" title="Galeri Blok">
+                            <i class="toolbar-icon">🖼️</i> Galeri Blok
+                        </button>
+                        <button class="toolbar-btn" data-action="add-quote-block" title="Alıntı Blok">
+                            <i class="toolbar-icon">💬</i> Alıntı Blok
+                        </button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-action="add-video-block" title="Video Blok">
+                            <i class="toolbar-icon">🎬</i> Video
+                        </button>
+                        <button class="toolbar-btn" data-action="add-embed-block" title="Gömülü İçerik">
+                            <i class="toolbar-icon">📌</i> Gömülü İçerik
+                        </button>
+                        <button class="toolbar-btn" data-action="add-3d-model" title="3D Model">
+                            <i class="toolbar-icon">🧊</i> 3D Model
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Zengin Metin Düzenleme Araç Çubuğu -->
+                <div class="rich-text-toolbar">
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-format="bold" title="Kalın">
+                            <i class="format-icon">B</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="italic" title="İtalik">
+                            <i class="format-icon">I</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="underline" title="Altı Çizili">
+                            <i class="format-icon">U</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="strikethrough" title="Üstü Çizili">
+                            <i class="format-icon">S</i>
+                        </button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-format="h1" title="Başlık 1">
+                            <i class="format-icon">H1</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="h2" title="Başlık 2">
+                            <i class="format-icon">H2</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="h3" title="Başlık 3">
+                            <i class="format-icon">H3</i>
+                        </button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-format="ul" title="Madde İşaretleri">
+                            <i class="format-icon">•</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="ol" title="Numaralı Liste">
+                            <i class="format-icon">1.</i>
+                        </button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-format="link" title="Bağlantı Ekle">
+                            <i class="format-icon">🔗</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="code" title="Kod">
+                            <i class="format-icon">&lt;/&gt;</i>
+                        </button>
+                        <button class="toolbar-btn" data-format="clear" title="Formatı Temizle">
+                            <i class="format-icon">✓</i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- İçerik Blokları Konteyneri -->
+                <div id="content-blocks" class="content-blocks">
+                    <!-- Bloklar JavaScript ile buraya eklenecek -->
+                    <div class="empty-content-message">
+                        <p>Gönderinize içerik eklemek için yukarıdaki butonları kullanın.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gönderi Aksiyonları -->
+            <div class="post-actions">
+                <button class="action-btn secondary" id="save-draft-btn">Taslak Olarak Kaydet</button>
+                <button class="action-btn primary" id="publish-btn">Yayınla</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">HP</div>
+                        <span class="logo-text">HikayePortalı</span>
+                    </a>
+                    <p>Hikayelerin buluşma noktası</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Sayfalar</h3>
+                        <ul>
+                            <li><a href="index.html">Anasayfa</a></li>
+                            <li><a href="discover.html">Keşfet</a></li>
+                            <li><a href="today.html">Tarihte Bugün</a></li>
+                            <li><a href="about.html">Hakkında</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Kategoriler</h3>
+                        <ul>
+                            <li><a href="#">Macera</a></li>
+                            <li><a href="#">Romantik</a></li>
+                            <li><a href="#">Bilim Kurgu</a></li>
+                            <li><a href="#">Fantastik</a></li>
+                            <li><a href="#">Korku</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Yasal</h3>
+                        <ul>
+                            <li><a href="#">Kullanım Şartları</a></li>
+                            <li><a href="#">Gizlilik Politikası</a></li>
+                            <li><a href="#">Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HikayePortalı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="post_editor.js"></script>
+</body>
+</html>

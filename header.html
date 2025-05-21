@@ -1,0 +1,61 @@
+<!-- Header - Modüler Navigasyon Barı -->
+<header class="main-header">
+    <div class="container">
+        <div class="header-inner">
+            <!-- Mobile Menu Button (Sol tarafa taşındı) -->
+            <button 
+                class="mobile-menu-button" 
+                id="mobile-menu-button" 
+                aria-label="Menüyü aç/kapat"
+                onclick="toggleMobileMenu()"
+            >
+                <span class="menu-icon">☰</span>
+            </button>
+            
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon">HP</div>
+                <span class="logo-text">HikayePortalı</span>
+            </a>
+            <!-- Ana Navigasyon -->
+            <nav class="main-nav">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html" class="nav-item home">Anasayfa</a></li>
+                    <li><a href="discover.html" class="nav-item discover">Keşfet</a></li>
+                    <li><a href="today.html" class="nav-item today">Tarihte Bugün</a></li>
+                    <li><a href="forum.html" class="nav-item forum">Forum</a></li>
+                    <li><a href="about.html" class="nav-item about">Hakkında</a></li>
+                    <li><a href="contact.html" class="nav-item contact">İletişim</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Kullanıcı İşlemleri -->
+            <div class="user-actions">
+                <!-- Giriş/Kayıt Butonları -->
+                <div class="auth-buttons" id="auth-buttons">
+                    <a href="login.html" class="login-button">Giriş Yap</a>
+                    <a href="register.html" class="register-button">Kayıt Ol</a>
+                </div>
+                
+                <!-- Kullanıcı profil menüsü (giriş yapıldığında görünür) -->
+                <div class="user-profile-container" id="user-profile-container" style="display: none;">
+                    <div class="user-profile" id="user-profile">
+                        <span id="user-initial">A</span>
+                    </div>
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <a href="profile.html" class="dropdown-item">
+                            <i class="dropdown-icon">👤</i>
+                            <span>Profilim</span>
+                        </a>
+                        <a href="#" class="dropdown-item" id="logout-button">
+                            <i class="dropdown-icon">🚪</i>
+                            <span>Çıkış Yap</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mobil menü için overlay -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+</header>
