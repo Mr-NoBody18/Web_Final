@@ -28,9 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Kullanıcı verileri static handler tarafından localStorage'a kaydediliyor
 
             // Başarılı mesajı göster ve ana sayfaya yönlendir
-            showSuccessMessage('Giriş başarılı! Yönlendiriliyorsunuz...');
-            setTimeout(() => {
-                window.location.href = '/';
+            showSuccessMessage('Giriş başarılı! Yönlendiriliyorsunuz...');            setTimeout(() => {
+                window.location.href = 'index.html';
             }, 1500);
 
         } catch (error) {
@@ -38,14 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';
         }
-    });
-
-    // Kullanıcının giriş durumunu kontrol et
+    });    // Kullanıcının giriş durumunu kontrol et
     function checkAuthStatus() {
-        const token = localStorage.getItem('token');
-        if (token) {
-            // Token varsa ana sayfaya yönlendir
-            window.location.href = '/';
+        const currentUser = staticData.getCurrentUser();
+        if (currentUser) {
+            // Kullanıcı giriş yapmış, ana sayfaya yönlendir
+            window.location.href = 'index.html';
         }
     }
 

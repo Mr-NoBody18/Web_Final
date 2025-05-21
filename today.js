@@ -96,49 +96,47 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchStoriesFromAPI();
         }
     }
-    
-    // API'den hikayeleri getir
-    function fetchStoriesFromAPI() {
-        fetch(`/api/stories?limit=5&sort=newest`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Hikayeler yüklenemedi');
-                }
-                return response.json();
-            })
-            .then(stories => {
-                // Hikayeleri localStorage'a kaydet
-                localStorage.setItem('todayPageStories', JSON.stringify(stories));
-                displayHistoricalEvents(stories);
-            })
-            .catch(error => {
-                console.error('Hikaye yükleme hatası:', error);
-                loadingSpinner.style.display = 'none';
-                historyEventsContainer.innerHTML = `
-                    <div class="error-message">
-                        <h2>Hikayeler Yüklenemedi</h2>
-                        <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
-                    </div>
-                `;
-            });
+      // StaticDataHandler ile hikayeleri getir
+    async function fetchStoriesFromAPI() {
+        try {
+            // StaticDataHandler ile hikayeleri al
+            const allStories = await staticData.loadStories();
+            
+            // En yeni 5 hikayeyi filtrele
+            const stories = allStories
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .slice(0, 5);
+                
+            // Hikayeleri localStorage'a kaydet
+            localStorage.setItem('todayPageStories', JSON.stringify(stories));
+            displayHistoricalEvents(stories);
+        } catch (error) {
+            console.error('Hikaye yükleme hatası:', error);
+            loadingSpinner.style.display = 'none';
+            historyEventsContainer.innerHTML = `
+                <div class="error-message">
+                    <h2>Hikayeler Yüklenemedi</h2>
+                    <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+                </div>
+            `;
+        }
     }
-    
-    // Arka planda API'den güncel hikayeleri getir
-    function refreshStoriesFromAPI() {
-        fetch(`/api/stories?limit=5&sort=newest`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Hikayeler yüklenemedi');
-                }
-                return response.json();
-            })
-            .then(stories => {
-                // Hikayeleri localStorage'a kaydet
-                localStorage.setItem('todayPageStories', JSON.stringify(stories));
-            })
-            .catch(error => {
-                console.error('Hikaye güncelleme hatası:', error);
-            });
+      // Arka planda StaticData ile güncel hikayeleri getir
+    async function refreshStoriesFromAPI() {
+        try {
+            // StaticDataHandler ile hikayeleri al
+            const allStories = await staticData.loadStories();
+            
+            // En yeni 5 hikayeyi filtrele
+            const stories = allStories
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .slice(0, 5);
+                
+            // Hikayeleri localStorage'a kaydet
+            localStorage.setItem('todayPageStories', JSON.stringify(stories));
+        } catch (error) {
+            console.error('Hikaye güncelleme hatası:', error);
+        }
     }
     
     // Hikayeleri görüntüle

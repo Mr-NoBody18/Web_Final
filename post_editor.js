@@ -1632,82 +1632,62 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-    
-    // API'ye veri gönderme fonksiyonu
-    function sendToApi(postData, status) {
+      // StaticDataHandler ile veri kaydetme fonksiyonu
+    async function sendToApi(postData, status) {
         // İçeriği JSON formatına dönüştür
         const contentJson = JSON.stringify(postData.blocks);
         console.log('İçerik JSON uzunluğu:', contentJson.length);
         
-        // API'ye gönderilecek veriyi hazırla
-        const apiData = {
-            title: postData.title,
-            content: contentJson,
-            category: postData.category,
-            tags: postData.tags,
-            status: status,
-            image_url: postData.coverImage
-        };
-        
-        // API endpoint'ini belirle
-        let apiUrl = '/api/stories';
-        let method = 'POST';
-        
-        // Mevcut gönderi ID'si varsa güncelleme yap
-        const postId = new URLSearchParams(window.location.search).get('id');
-        if (postId) {
-            apiUrl = `/api/stories/${postId}`;
-            method = 'PUT';
-        }
-        
-        // Kullanıcı token'ını localStorage'dan al
-        const token = localStorage.getItem('token');
-        if (!token) {
+        // Mevcut kullanıcıyı al
+        const currentUser = staticData.getCurrentUser();
+        if (!currentUser) {
             showNotification('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.', 'error');
             setTimeout(() => window.location.href = 'login.html', 2000);
             return;
         }
         
-        // API isteği için headers hazırla
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+        // StaticDataHandler'a gönderilecek veriyi hazırla
+        const storyData = {
+            title: postData.title,
+            content: contentJson,
+            category: postData.category,
+            tags: postData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+            status: status,
+            cover_image: postData.coverImage,
+            user_id: currentUser.id,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            view_count: 0,
+            like_count: 0,
+            comment_count: 0
         };
         
-        // İstek öncesi yükleniyor göstergesi
-        showNotification('Gönderiniz kaydediliyor...', 'info');
+        // Mevcut gönderi ID'si varsa güncelleme yap
+        const postId = new URLSearchParams(window.location.search).get('id');
         
-        // API isteğini gönder
-        fetch(apiUrl, {
-            method: method,
-            headers: headers,
-            body: JSON.stringify(apiData)
-        })
-        .then(handleApiResponse)
-        .then(data => handleApiSuccess(data, status, postId))
-        .catch(error => handleApiError(error));
-    }
-    
-    // API yanıtını işleme
-    async function handleApiResponse(response) {
-        let responseData;
         try {
-            responseData = await response.json();
-        } catch (e) {
-            if (!response.ok) {
-                throw new Error(`Sunucu hatası: ${response.status} ${response.statusText}`);
+            // İstek öncesi yükleniyor göstergesi
+            showNotification('Gönderiniz kaydediliyor...', 'info');
+            
+            let data;
+            
+            if (postId) {
+                // Var olan hikayeyi güncelle
+                data = await staticData.updateStory(parseInt(postId), storyData);
+            } else {
+                // Yeni hikaye ekle
+                data = await staticData.addStory(storyData);
             }
-            throw new Error('Sunucudan geçersiz yanıt alındı');
+            
+            handleApiSuccess(data, status, postId);
+        } catch (error) {
+            handleApiError(error);
         }
-        
-        if (!response.ok) {
-            if (responseData && responseData.message) {
-                throw new Error(responseData.message);
-            }
-            throw new Error(`Gönderi kaydedilirken bir hata oluştu (${response.status})`);
-        }
-        
-        return responseData;
+    }
+      // Bu fonksiyon artık staticData kullanıldığından ihtiyaç duyulmuyor, ama
+    // patlamayı önlemek için boş bir uygulama sağlıyoruz
+    async function handleApiResponse(response) {
+        return response;
     }
     
     // API başarı durumunu işleme

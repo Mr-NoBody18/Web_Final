@@ -37,31 +37,28 @@ document.addEventListener('DOMContentLoaded', () => {
             showError('Şifre en az 6 karakter olmalıdır');
             return;
         }
-        
-        // Kayıt işlemini gerçekleştir
+          // Kayıt işlemini staticData handler ile gerçekleştir
         try {
-            const response = await fetch('/api/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, real_name, email, age, password })
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Kayıt olurken bir hata oluştu');
+            // StaticDataHandler ile kayıt ol
+            const userData = {
+                username, 
+                real_name, 
+                email, 
+                age: parseInt(age) || 0, 
+                password
+            };
+            
+            const user = await staticData.register(userData);
+            
+            if (!user) {
+                throw new Error('Kayıt olurken bir hata oluştu');
             }
-
-            // Token'ı localStorage'a kaydet
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            
+            // Kullanıcı verileri static handler tarafından localStorage'a kaydediliyor
 
             // Başarılı mesajı göster ve ana sayfaya yönlendir
-            showSuccessMessage('Kayıt başarılı! Yönlendiriliyorsunuz...');
-            setTimeout(() => {
-                window.location.href = '/';
+            showSuccessMessage('Kayıt başarılı! Yönlendiriliyorsunuz...');            setTimeout(() => {
+                window.location.href = 'index.html';
             }, 1500);
 
         } catch (error) {
@@ -82,14 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMessage.textContent = message;
         errorMessage.className = 'alert alert-success';
         errorMessage.style.display = 'block';
-    }
-
-    // Kullanıcının giriş durumunu kontrol et
+    }    // Kullanıcının giriş durumunu kontrol et
     function checkAuthStatus() {
-        const token = localStorage.getItem('token');
-        if (token) {
-            // Token varsa ana sayfaya yönlendir
-            window.location.href = '/';
+        const currentUser = staticData.getCurrentUser();
+        if (currentUser) {
+            // Kullanıcı giriş yapmış, ana sayfaya yönlendir
+            window.location.href = 'index.html';
         }
     }
 });
