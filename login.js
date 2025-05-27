@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('error-message');
 
     // Kullanıcı zaten giriş yapmışsa ana sayfaya yönlendir
-    checkAuthStatus();    // Form gönderildiğinde
+    checkAuthStatus();
+
+    // Form gönderildiğinde
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -16,20 +18,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
         const remember = document.getElementById('remember').checked;
         
-        // Giriş işlemini staticData handler ile gerçekleştir
+        // Giriş işlemini gerçekleştir
         try {
-            // StaticDataHandler ile giriş yap
-            const user = await staticData.login(username, password);
-            
-            if (!user) {
-                throw new Error('Kullanıcı adı veya şifre hatalı');
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Giriş yapılırken bir hata oluştu');
             }
-            
-            // Kullanıcı verileri static handler tarafından localStorage'a kaydediliyor
+
+            // Token'ı localStorage'a kaydet
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
 
             // Başarılı mesajı göster ve ana sayfaya yönlendir
-            showSuccessMessage('Giriş başarılı! Yönlendiriliyorsunuz...');            setTimeout(() => {
-                window.location.href = 'index.html';
+            showSuccessMessage('Giriş başarılı! Yönlendiriliyorsunuz...');
+            setTimeout(() => {
+                window.location.href = '/';
             }, 1500);
 
         } catch (error) {
@@ -37,12 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';
         }
-    });    // Kullanıcının giriş durumunu kontrol et
+    });
+
+    // Kullanıcının giriş durumunu kontrol et
     function checkAuthStatus() {
-        const currentUser = staticData.getCurrentUser();
-        if (currentUser) {
-            // Kullanıcı giriş yapmış, ana sayfaya yönlendir
-            window.location.href = 'index.html';
+        const token = localStorage.getItem('token');
+        if (token) {
+            // Token varsa ana sayfaya yönlendir
+            window.location.href = '/';
         }
     }
 

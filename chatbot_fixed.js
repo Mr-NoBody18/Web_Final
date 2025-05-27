@@ -3,15 +3,12 @@
  * Bu dosya, siteye entegre edilmiş kompakt ve açılır-kapanır sohbet botunun işlevselliğini sağlar.
  */
 
-document.addEventListener('DOMContentLoaded', function() {    // Sohbet botu arayüzünü oluştur
+document.addEventListener('DOMContentLoaded', function() {
+    // Sohbet botu arayüzünü oluştur
     createChatbotInterface();
     
     // Sohbet botu işlevselliğini ayarla
     setupChatbotFunctionality();
-    
-    // API durumu hakkında bilgi ver
-    console.log('Chatbot başlatıldı. API anahtarı durumu:', 
-        (window.API_KEY && window.API_KEY !== 'YOUR_API_KEY_HERE') ? 'Tanımlı' : 'Tanımlı değil - Fallback sistemi aktif');
 });
 
 /**
@@ -256,9 +253,10 @@ function setupChatbotFunctionality() {
     const chatbotMinimize = document.querySelector('.chatbot-minimize');
     const chatbotInput = document.querySelector('.chatbot-input');
     const chatbotSend = document.querySelector('.chatbot-send');
-    const chatbotMessages = document.querySelector('.chatbot-messages');    // API Anahtarı (Gerçek uygulamada bu değer güvenli bir şekilde saklanmalıdır)
-    // NOT: Bu API anahtarı geçersiz veya süresi dolmuş olabilir. Kendi API anahtarınızı kullanın.
-    window.API_KEY = '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'; // Buraya geçerli OpenRouter API anahtarınızı girin
+    const chatbotMessages = document.querySelector('.chatbot-messages');
+    
+    // API Anahtarı (Gerçek uygulamada bu değer güvenli bir şekilde saklanmalıdır)
+    const API_KEY = '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';
     const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
     
     // Sohbet botunu aç/kapat
@@ -325,16 +323,10 @@ function setupChatbotFunctionality() {
             loadingElement.remove();
         }
     }
-      // Yapay zeka API'sine istek gönder
+    
+    // Yapay zeka API'sine istek gönder
     async function getAIResponse(message) {
-        try {            // API anahtarı kontrolü
-            if (!window.API_KEY || window.API_KEY === 'YOUR_API_KEY_HERE') {
-                console.warn('API anahtarı tanımlanmamış, fallback sistemi kullanılıyor.');
-                throw new Error('API anahtarı bulunamadı');
-            }
-            
-            console.log('API isteği başlatılıyor...');
-            
+        try {
             // API isteği için veri hazırla
             const requestData = {
                 model: "meta-llama/llama-3.1-8b-instruct:free",
@@ -370,41 +362,26 @@ function setupChatbotFunctionality() {
                 temperature: 0.7
             };
 
-            console.log('Request data:', requestData);
-
             // API isteği gönder
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${window.API_KEY}`,
+                    'Authorization': `Bearer ${API_KEY}`,
                     'HTTP-Referer': window.location.origin,
                     'X-Title': 'Güncel Haberler Sitesi'
                 },
                 body: JSON.stringify(requestData)
             });
 
-            console.log('Response status:', response.status);
-
             // Yanıtı işle
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('API Yanıt Detayı:', errorText);
-                
-                // Özel hata mesajları
-                if (response.status === 401) {
-                    throw new Error('API anahtarı geçersiz veya yetkisiz erişim');
-                } else if (response.status === 403) {
-                    throw new Error('API erişimi reddedildi');
-                } else if (response.status === 429) {
-                    throw new Error('API kullanım limiti aşıldı');
-                } else {
-                    throw new Error(`API yanıt hatası: ${response.status} - ${response.statusText}`);
-                }
+                throw new Error(`API yanıt hatası: ${response.status} - ${response.statusText}`);
             }
 
             const data = await response.json();
-            console.log('API Response data:', data);
             
             if (!data.choices || !data.choices[0] || !data.choices[0].message) {
                 throw new Error('API yanıtı beklenenden farklı format');
@@ -413,9 +390,7 @@ function setupChatbotFunctionality() {
             return data.choices[0].message.content.trim();
             
         } catch (error) {
-            console.error('API isteği sırasında detaylı hata:', error);
-            console.error('Hata türü:', error.name);
-            console.error('Hata mesajı:', error.message);
+            console.error('API isteği sırasında hata:', error);
             throw error;
         }
     }

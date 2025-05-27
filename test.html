@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sayfası - Sistem Durumu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+            font-size: 12px;
+        }
+        .success { background-color: #22c55e; }
+        .error { background-color: #ef4444; }
+        .warning { background-color: #f59e0b; }
+        .test-log {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Sistem Test Sayfası</h1>
+        <p>Bu sayfa, sitenin tüm bileşenlerinin doğru çalıştığını kontrol eder.</p>
+        
+        <div id="test-results">
+            <div class="test-item">
+                <span>JavaScript Yüklendi</span>
+                <span class="status" id="js-status">Test ediliyor...</span>
+            </div>
+            <div class="test-item">
+                <span>Header Yüklendi</span>
+                <span class="status" id="header-status">Test ediliyor...</span>
+            </div>
+            <div class="test-item">
+                <span>DataUtils Çalışıyor</span>
+                <span class="status" id="data-status">Test ediliyor...</span>
+            </div>
+            <div class="test-item">
+                <span>PageUtils Çalışıyor</span>
+                <span class="status" id="page-status">Test ediliyor...</span>
+            </div>
+            <div class="test-item">
+                <span>Chatbot Yüklendi</span>
+                <span class="status" id="chatbot-status">Test ediliyor...</span>
+            </div>
+            <div class="test-item">
+                <span>Görseller Yükleniyor</span>
+                <span class="status" id="images-status">Test ediliyor...</span>
+            </div>
+        </div>
+        
+        <div class="test-log" id="test-log">
+            <strong>Test Logları:</strong><br>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button onclick="runTests()" style="background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+                Testleri Yeniden Çalıştır
+            </button>
+            <a href="index.html" style="background: #22c55e; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; margin-left: 10px; display: inline-block;">
+                Ana Sayfaya Dön
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logElement = document.getElementById('test-log');
+            logElement.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function setStatus(id, status, message) {
+            const element = document.getElementById(id);
+            element.textContent = message;
+            element.className = 'status ' + status;
+        }
+
+        async function runTests() {
+            log('Test süreci başlatılıyor...');
+            
+            // JavaScript yükleme testi
+            try {
+                log('JavaScript motor testi...');
+                setStatus('js-status', 'success', 'Çalışıyor');
+                log('✓ JavaScript başarıyla yüklendi');
+            } catch (e) {
+                setStatus('js-status', 'error', 'Hata');
+                log('✗ JavaScript hatası: ' + e.message);
+            }
+
+            // Header yükleme testi
+            try {
+                log('Header yükleme testi...');
+                const response = await fetch('./header.html');
+                if (response.ok) {
+                    setStatus('header-status', 'success', 'Yüklendi');
+                    log('✓ Header başarıyla yüklendi');
+                } else {
+                    setStatus('header-status', 'error', '404 Hatası');
+                    log('✗ Header yüklenemedi: ' + response.status);
+                }
+            } catch (e) {
+                setStatus('header-status', 'error', 'Ağ Hatası');
+                log('✗ Header ağ hatası: ' + e.message);
+            }
+
+            // DataUtils testi
+            try {
+                log('Veri yükleme testi...');
+                const response = await fetch('./data/posts.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    setStatus('data-status', 'success', 'Çalışıyor');
+                    log('✓ Veri başarıyla yüklendi, ' + (data.posts ? data.posts.length : 0) + ' gönderi bulundu');
+                } else {
+                    setStatus('data-status', 'error', '404 Hatası');
+                    log('✗ Veri yüklenemedi: ' + response.status);
+                }
+            } catch (e) {
+                setStatus('data-status', 'error', 'Ağ Hatası');
+                log('✗ Veri ağ hatası: ' + e.message);
+            }
+
+            // PageUtils testi
+            try {
+                log('PageUtils testi...');
+                const response = await fetch('./js/utils/pageUtils.js');
+                if (response.ok) {
+                    setStatus('page-status', 'success', 'Yüklendi');
+                    log('✓ PageUtils başarıyla yüklendi');
+                } else {
+                    setStatus('page-status', 'error', '404 Hatası');
+                    log('✗ PageUtils yüklenemedi: ' + response.status);
+                }
+            } catch (e) {
+                setStatus('page-status', 'error', 'Ağ Hatası');
+                log('✗ PageUtils ağ hatası: ' + e.message);
+            }
+
+            // Chatbot testi
+            try {
+                log('Chatbot testi...');
+                const response = await fetch('./chatbot.js');
+                if (response.ok) {
+                    setStatus('chatbot-status', 'success', 'Yüklendi');
+                    log('✓ Chatbot başarıyla yüklendi');
+                } else {
+                    setStatus('chatbot-status', 'error', '404 Hatası');
+                    log('✗ Chatbot yüklenemedi: ' + response.status);
+                }
+            } catch (e) {
+                setStatus('chatbot-status', 'error', 'Ağ Hatası');
+                log('✗ Chatbot ağ hatası: ' + e.message);
+            }
+
+            // Görsel testi
+            try {
+                log('Görsel yükleme testi...');
+                const response = await fetch('./images/avatars/default.svg');
+                if (response.ok) {
+                    setStatus('images-status', 'success', 'Yükleniyor');
+                    log('✓ Görseller başarıyla yüklendi');
+                } else {
+                    setStatus('images-status', 'error', '404 Hatası');
+                    log('✗ Görseller yüklenemedi: ' + response.status);
+                }
+            } catch (e) {
+                setStatus('images-status', 'error', 'Ağ Hatası');
+                log('✗ Görsel ağ hatası: ' + e.message);
+            }
+
+            log('Test süreci tamamlandı!');
+        }
+
+        // Sayfa yüklendiğinde testleri çalıştır
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

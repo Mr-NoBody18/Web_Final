@@ -1,48 +1,54 @@
-# Hikaye Portalı - Statik Sürüm
+## Proje Yapısı ve Değişiklikler
 
-Bu proje, sunucu ve veritabanı gerektirmeden tamamen tarayıcı üzerinde çalışan bir hikaye portalıdır. Tüm veriler JSON dosyalarında statik olarak saklanır ve kullanıcı etkileşimleri tarayıcının yerel depolama (localStorage) özelliği kullanılarak yönetilir.
+### Sunucusuz, JSON Tabanlı Sistem Yapısı
 
-## Özellikler
+Bu projede, önceden sunucu tabanlı olan bir web sitesinin sunucusuz bir yapıya dönüştürülmesi yapıldı. Veriler artık JSON dosyaları üzerinden yönetiliyor. Bu sayede herhangi bir sunucu olmadan site çalışabilir hale geldi.
 
-- Hikaye okuma
-- Hikaye beğenme ve kaydetme
-- Yorum yapma
-- Kullanıcı girişi ve kayıt işlemleri (simüle edilmiş)
-- Hikayeleri kategorilere göre filtreleme
-- Arama ve keşfetme
+### Yeni Dosya Yapısı
 
-## Yapı
-
-Proje, veri tabanı ve sunucu olmadan çalışacak şekilde tasarlanmıştır:
-
-- `static_data/`: JSON veri dosyalarının bulunduğu klasör
+- `/data/`: JSON veri dosyaları burada bulunur
   - `users.json`: Kullanıcı verileri
-  - `stories.json`: Hikaye verileri
+  - `posts.json`: Gönderi/hikaye verileri
   - `comments.json`: Yorum verileri
-- `static-data-handler.js`: Veri yönetimi için JavaScript kütüphanesi
-- `static_version.html`: Statik sürüm için ana sayfa
-- `json_editor.html`: JSON verilerini düzenlemek için arayüz
 
-## Nasıl Kullanılır
+- `/js/`: JavaScript dosyaları daha düzenli bir yapıya kavuşturuldu
+  - `/utils/`: Yardımcı fonksiyonlar
+    - `dataUtils.js`: Veri işleme fonksiyonları
+    - `pageUtils.js`: Sayfa yükleme, UI güncelleme fonksiyonları
+    - `compatUtils.js`: Eski API çağrılarını yeni JSON yapısına yönlendirmek için uyumluluk katmanı
+  
+  - `/pages/`: Sayfa bazlı JavaScript kodları
+    - `index.js`: Ana sayfa için özel kodlar
+    - `login.js`: Giriş sayfası için özel kodlar
+    - `register.js`: Kayıt sayfası için özel kodlar
+    - `post_detail.js`: Gönderi detay sayfası için özel kodlar
+  
+  - `/components/`: Sayfalarda kullanılan bileşenler için (henüz boş)
 
-1. `static_version.html` dosyasını bir web tarayıcısı ile açın
-2. Ana sayfadan istediğiniz bölüme gidin
-3. Test için kullanıcı girişi yapabilirsiniz:
-   - Kullanıcı adı: admin, şifre: herhangi bir şey
-   - Kullanıcı adı: yazar1, şifre: herhangi bir şey
-   - Kullanıcı adı: yazar2, şifre: herhangi bir şey
+### Önemli Değişiklikler
 
-## JSON Verilerini Düzenleme
+1. **Veri Yönetimi**:
+   - Tüm veriler JSON dosyalarında saklanıyor
+   - `dataUtils.js` üzerinden merkezi olarak yönetiliyor
+   - localStorage, kullanıcı oturumu ve önbellek için kullanılıyor
 
-Verileri güncellemek veya değiştirmek için:
+2. **Kimlik Doğrulama**:
+   - Tamamen istemci taraflı yönetiliyor
+   - Token ve kullanıcı bilgileri localStorage'da saklanıyor
 
-1. `json_editor.html` sayfasını açın
-2. Düzenlemek istediğiniz JSON dosyasını seçin
-3. Değişikliklerinizi yapın ve kaydedin
-4. Değişikliklerin etkili olması için sayfayı yenileyin
+3. **Sayfa Yapısı**:
+   - Tüm sayfalarda ortak başlatma kodu kullanılıyor
+   - Header, dinamik olarak yükleniyor
 
-## Notlar
+### Kullanım
 
-- Bu statik sürümde, tüm veri değişiklikleri sadece kullandığınız tarayıcının localStorage'ında saklanır
-- Tarayıcı verilerini temizlerseniz, yaptığınız tüm değişiklikler kaybolur
-- Bu sürüm sadece yerel kullanım için uygundur, birden fazla kullanıcı arasında veri paylaşımı yoktur
+1. Tüm sayfalar direk tarayıcıda açılabilir
+2. Giriş için örnek kullanıcı:
+   - Kullanıcı adı: demo_user
+   - Şifre: hashed_password_123
+
+### Dikkat Edilmesi Gerekenler
+
+1. Bu yapı sadece demo/prototip amaçlıdır ve gerçek bir uygulamada güvenlik açığı oluşturur.
+2. Gerçek bir projede API çağrıları için Firebase, Supabase gibi BaaS (Backend as a Service) platformları kullanılması önerilir.
+3. JSON dosyaları üzerinde yapılan değişiklikler kalıcı değildir, tarayıcı yenilendiğinde lokalda yapılan değişiklikler kaybedilecektir.

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test - Güncel Haberler</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-header {
+            text-align: center;
+            color: #1a1a2e;
+            margin-bottom: 30px;
+        }
+        .api-status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .api-status.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .api-status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .instructions {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #1a1a2e;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🤖 Chatbot Test Sayfası</h1>
+            <p>Güncel Haberler Sitesi - Sohbet Botu Test Ortamı</p>
+        </div>
+
+        <div id="api-status" class="api-status warning">
+            ⚠️ API Anahtarı tanımlanmamış - Fallback sistemi aktif
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Test Talimatları:</h3>
+            <ol>
+                <li>Sağ alt köşedeki 💬 simgesine tıklayarak chatbot'u açın</li>
+                <li>Chatbot şu anda <strong>fallback modu</strong>nda çalışıyor</li>
+                <li>API anahtarı olmadan da site hakkında bilgi verebilir</li>
+                <li>Aşağıdaki test mesajlarını deneyebilirsiniz:</li>
+            </ol>
+            
+            <div class="code-block">
+                • "Merhaba"<br>
+                • "Haberler nerede?"<br>
+                • "Forum nasıl kullanılır?"<br>
+                • "Profil sayfası nerede?"<br>
+                • "Giriş yapmak istiyorum"<br>
+                • "Yardım"
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🔑 API Anahtarı Ayarlama:</h3>
+            <p>Eğer gerçek AI yanıtları almak istiyorsanız:</p>
+            <ol>
+                <li><a href="https://openrouter.ai" target="_blank">OpenRouter.ai</a> sitesinden ücretsiz API anahtarı alın</li>
+                <li><code>chatbot.js</code> dosyasındaki <code>YOUR_API_KEY_HERE</code> kısmını değiştirin</li>
+                <li>Sayfayı yenileyin</li>
+            </ol>
+            
+            <div class="code-block">
+                const API_KEY = 'sk-or-v1-sizin-api-anahtariniz-buraya';
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>✅ Chatbot Özellikleri:</h3>
+            <ul>
+                <li>🎯 Site odaklı yanıtlar</li>
+                <li>📱 Mobil uyumlu tasarım</li>
+                <li>⚡ Hızlı fallback sistemi</li>
+                <li>🔄 Otomatik hata yönetimi</li>
+                <li>💬 Kolay kullanımlı arayüz</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chatbot Script -->
+    <script src="chatbot.js"></script>
+    
+    <script>
+        // API durumunu kontrol et ve göster
+        setTimeout(() => {
+            const statusDiv = document.getElementById('api-status');
+            const hasValidApiKey = window.API_KEY && window.API_KEY !== 'YOUR_API_KEY_HERE';
+            
+            if (hasValidApiKey) {
+                statusDiv.className = 'api-status success';
+                statusDiv.innerHTML = '✅ API Anahtarı tanımlı - AI yanıtları aktif';
+            } else {
+                statusDiv.className = 'api-status warning';
+                statusDiv.innerHTML = '⚠️ API Anahtarı tanımlanmamış - Fallback sistemi aktif (Site bilgileri verebilir)';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

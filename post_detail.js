@@ -20,18 +20,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // URL'den gönderi ID'sini al
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
-      if (postId) {
-        // Gönderi detaylarını static data handler ile getir
-        staticData.getStoryById(postId)
-            .then(post => {
-                if (!post) {
+    
+    if (postId) {
+        // Gönderi detaylarını getir
+        fetch(`/api/stories/${postId}`)
+            .then(response => {
+                if (!response.ok) {
                     throw new Error('Gönderi bulunamadı');
                 }
+                return response.json();
+            })
+            .then(post => {
                 displayPost(post);
                 loadRelatedPosts(post.category, post.id);
                 loadComments(post.id);
                 
-                // View count zaten StaticDataHandler'da artırılıyor
+                // Görüntülenme sayısını artır
+                incrementViewCount(post.id);
             })
             .catch(error => {
                 console.error('Gönderi yükleme hatası:', error);
@@ -53,11 +58,17 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     }
-      // Görüntülenme sayısı artık StaticDataHandler tarafından otomatik artırılıyor
-    // Bu işlev artık kullanılmıyor
+    
+    // Görüntülenme sayısını artır
     function incrementViewCount(storyId) {
-        // Static data kullandığımız için bu işlev artık kullanılmıyor
-        console.log('View count değeri otomatik olarak artırıldı.');
+        fetch(`/api/stories/${storyId}/view`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .catch(error => console.error('Görüntülenme sayısı artırma hatası:', error));
     }
     
     // Gönderi içeriğini görüntüle
@@ -642,20 +653,20 @@ document.addEventListener('DOMContentLoaded', function() {
         blockElement.appendChild(modelPreview);
         return blockElement;
     }
-      // Benzer gönderileri yükle
-    async function loadRelatedPosts(category, currentPostId) {
-        try {
-            // staticData kullanarak kategoriye göre hikayeleri al
-            const posts = await staticData.getStories({category: category, limit: 4});
-            
-            // Mevcut gönderiyi filtrele
-            const relatedPosts = posts.filter(post => post.id !== parseInt(currentPostId)).slice(0, 3);
-            
-            if (relatedPostsContainer) {
-                if (relatedPosts.length === 0) {
-                    relatedPostsContainer.innerHTML = '<p class="no-content">Benzer gönderi bulunamadı.</p>';
-                    return;
-                }
+    
+    // Benzer gönderileri yükle
+    function loadRelatedPosts(category, currentPostId) {
+        fetch(`/api/posts?category=${category}&limit=4`)
+            .then(response => response.json())
+            .then(posts => {
+                // Mevcut gönderiyi filtrele
+                const relatedPosts = posts.filter(post => post.id !== currentPostId).slice(0, 3);
+                
+                if (relatedPostsContainer) {
+                    if (relatedPosts.length === 0) {
+                        relatedPostsContainer.innerHTML = '<p class="no-content">Benzer gönderi bulunamadı.</p>';
+                        return;
+                    }
                     
                     relatedPostsContainer.innerHTML = '';
                     
@@ -686,46 +697,54 @@ document.addEventListener('DOMContentLoaded', function() {
                     relatedPostsContainer.innerHTML = '<p class="error-message">Benzer gönderiler yüklenirken bir hata oluştu.</p>';
                 }
             });
-    }      // Yorumları yükle
-    async function loadComments(postId) {
-        try {
-            const comments = await staticData.getCommentsByStoryId(parseInt(postId));
-            
-            if (commentsCount) {
-                commentsCount.textContent = comments.length;
-            }
-                
-            if (commentsList) {
-                if (comments.length === 0) {
-                    commentsList.innerHTML = '<p class="no-comments">Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>';
-                    return;
+    }
+    
+    // Yorumları yükle
+    function loadComments(postId) {
+        fetch(`/api/stories/${postId}/comments`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Yorumlar yüklenemedi');
+                }
+                return response.json();
+            })
+            .then(comments => {
+                if (commentsCount) {
+                    commentsCount.textContent = comments.length;
                 }
                 
-                commentsList.innerHTML = '';
-                
-                comments.forEach(comment => {
-                    const commentElement = document.createElement('div');
-                    commentElement.className = 'comment';
-                    commentElement.innerHTML = `
-                        <div class="comment-avatar" style="background-image: url('${comment.profile_image || '../images/default-avatar.jpg'}');"></div>
-                        <div class="comment-content">
-                            <div class="comment-header">
-                                <span class="comment-author">${comment.real_name || comment.username}</span>
-                                <span class="comment-date">${formatDate(new Date(comment.created_at))}</span>
-                            </div>
-                            <div class="comment-text">${comment.content}</div>
-                        </div>
-                    `;
+                if (commentsList) {
+                    if (comments.length === 0) {
+                        commentsList.innerHTML = '<p class="no-comments">Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>';
+                        return;
+                    }
                     
-                    commentsList.appendChild(commentElement);
-                });
-            }
-        } catch (error) {
-            console.error('Yorumlar yüklenirken hata:', error);
-            if (commentsList) {
-                commentsList.innerHTML = '<p class="error-message">Yorumlar yüklenirken bir hata oluştu.</p>';
-            }
-        }
+                    commentsList.innerHTML = '';
+                    
+                    comments.forEach(comment => {
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment';
+                        commentElement.innerHTML = `
+                            <div class="comment-avatar" style="background-image: url('${comment.profile_image || '../images/default-avatar.jpg'}');"></div>
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-author">${comment.real_name || comment.username}</span>
+                                    <span class="comment-date">${formatDate(new Date(comment.created_at))}</span>
+                                </div>
+                                <div class="comment-text">${comment.content}</div>
+                            </div>
+                        `;
+                        
+                        commentsList.appendChild(commentElement);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Yorumlar yüklenirken hata:', error);
+                if (commentsList) {
+                    commentsList.innerHTML = '<p class="error-message">Yorumlar yüklenirken bir hata oluştu.</p>';
+                }
+            });
     }
     
     // Yorum gönderme

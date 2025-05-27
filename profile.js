@@ -53,36 +53,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const real_name = document.getElementById('real_name').value;
         const email = document.getElementById('email').value;
         const age = document.getElementById('age').value;
-          // Profil güncelleme işlemini staticData ile gerçekleştir
+        
+        // Profil güncelleme işlemini gerçekleştir
         try {
-            // Mevcut kullanıcıyı al
-            const currentUser = staticData.getCurrentUser();
+            const token = localStorage.getItem('token');
             
-            if (!currentUser) {
+            if (!token) {
                 throw new Error('Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
             }
             
-            // Statik veri güncellemeleri için tüm kullanıcıları al
-            const users = await staticData.loadUsers();
-            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            const response = await fetch('/api/users/profile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ real_name, email, age })
+            });
             
-            if (userIndex === -1) {
-                throw new Error('Kullanıcı bulunamadı');
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Profil güncellenirken bir hata oluştu');
             }
             
-            // Kullanıcı bilgilerini güncelle
-            users[userIndex].real_name = real_name;
-            users[userIndex].email = email;
-            users[userIndex].age = parseInt(age) || 0;
+            showSuccessMessage(data.message || 'Profil başarıyla güncellendi');
             
-            // Kullanıcıları kaydet
-            staticData.saveUsers(users);
-            
-            // Mevcut kullanıcı bilgilerini localStorage'da güncelle
-            const updatedUserData = {...currentUser, real_name, email, age: parseInt(age) || 0};
-            localStorage.setItem(staticData.authUserKey, JSON.stringify(updatedUserData));
-            
-            showSuccessMessage('Profil başarıyla güncellendi');
+            // Kullanıcı bilgilerini localStorage'da güncelle
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.real_name = real_name;
+            user.email = email;
+            user.age = age;
+            localStorage.setItem('user', JSON.stringify(user));
             
         } catch (error) {
             showErrorMessage(error.message);
@@ -109,36 +111,34 @@ document.addEventListener('DOMContentLoaded', () => {
             showErrorMessage('Şifre en az 6 karakter olmalıdır');
             return;
         }
-          // Şifre değiştirme işlemini staticData ile gerçekleştir
+        
+        // Şifre değiştirme işlemini gerçekleştir
         try {
-            const currentUser = staticData.getCurrentUser();
+            const token = localStorage.getItem('token');
             
-            if (!currentUser) {
+            if (!token) {
                 throw new Error('Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
             }
             
-            // Gerçek uygulamada şifre değiştirme işlemi daha kompleks olacaktır
-            // Burada basit bir simülasyon yapıyoruz
+            const response = await fetch('/api/users/change-password', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ current_password, new_password })
+            });
             
-            // Tüm kullanıcıları al
-            const users = await staticData.loadUsers();
-            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            const data = await response.json();
             
-            if (userIndex === -1) {
-                throw new Error('Kullanıcı bulunamadı');
+            if (!response.ok) {
+                throw new Error(data.message || 'Şifre değiştirilirken bir hata oluştu');
             }
-            
-            // Not: Gerçek dünyada güvenli şifre değiştirme farklı yapılır
-            // Bu simülasyon amaçlı basit bir değişiklik
-            users[userIndex].password_hash = "new_password_hash_" + new_password;
-            
-            // Kullanıcıları kaydet
-            staticData.saveUsers(users);
             
             // Formu temizle
             passwordForm.reset();
             
-            showSuccessMessage('Şifre başarıyla değiştirildi');
+            showSuccessMessage(data.message || 'Şifre başarıyla değiştirildi');
             
         } catch (error) {
             showErrorMessage(error.message);
@@ -158,65 +158,108 @@ document.addEventListener('DOMContentLoaded', () => {
             showErrorMessage('Hesabınızı silmek için onay kutusunu işaretlemelisiniz');
             return;
         }
-          // Hesap silme işlemini staticData ile gerçekleştir
+        
+        // Hesap silme işlemini gerçekleştir
         try {
-            const currentUser = staticData.getCurrentUser();
+            const token = localStorage.getItem('token');
             
-            if (!currentUser) {
+            if (!token) {
                 throw new Error('Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
             }
             
-            // Gerçek uygulamada şifre doğrulama daha kompleks olacaktır
-            // Burada basit bir simülasyon yapıyoruz
+            // Şifre doğrulama için önce giriş yap
+            const user = JSON.parse(localStorage.getItem('user'));
             
-            // Tüm kullanıcıları al
-            const users = await staticData.loadUsers();
-            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            const loginResponse = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    username: user.username, 
+                    password: delete_password 
+                })
+            });
             
-            if (userIndex === -1) {
-                throw new Error('Kullanıcı bulunamadı');
+            if (!loginResponse.ok) {
+                throw new Error('Şifre yanlış. Hesap silme işlemi iptal edildi.');
             }
             
-            // Kullanıcıyı sil
-            users.splice(userIndex, 1);
+            // Hesabı sil
+            const response = await fetch('/api/users', {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             
-            // Kullanıcıları kaydet
-            staticData.saveUsers(users);
+            const data = await response.json();
             
-            // Çıkış yap
-            staticData.logout();
+            if (!response.ok) {
+                throw new Error(data.message || 'Hesap silinirken bir hata oluştu');
+            }
+            
+            // Kullanıcı bilgilerini temizle
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
             
             showSuccessMessage('Hesabınız başarıyla silindi. Yönlendiriliyorsunuz...');
             
             // Ana sayfaya yönlendir
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             }, 2000);
             
         } catch (error) {
             showErrorMessage(error.message);
         }
     });
-      // Kullanıcı profil bilgilerini yükle
+    
+    // Kullanıcı profil bilgilerini yükle
     async function loadUserProfile() {
         try {
-            // StaticDataHandler'dan kullanıcı bilgilerini al
-            const user = staticData.getCurrentUser();
+            // Önce localStorage'dan kullanıcı bilgilerini al
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
             
-            if (!user) {
+            if (!user || !token) {
                 throw new Error('Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
             }
             
             // Form alanlarını doldur
             document.getElementById('username').value = user.username;
-            document.getElementById('real_name').value = user.real_name || '';
-            document.getElementById('email').value = user.email || '';
-            document.getElementById('age').value = user.age || '';
+            document.getElementById('real_name').value = user.real_name;
+            document.getElementById('email').value = user.email;
             
             // Profil üst bilgi alanını güncelle
             profileUsername.textContent = user.username;
             profileInitial.textContent = user.username.charAt(0).toUpperCase();
             profileBio.textContent = user.real_name ? `${user.real_name} - Hikaye Portalı Üyesi` : 'Hikaye Portalı Üyesi';
+            
+            // Sunucudan güncel kullanıcı bilgilerini al
+            const response = await fetch('/api/users/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (!response.ok) {
+                // Sunucu hatası varsa sessizce devam et, zaten localStorage'dan bilgileri gösteriyoruz
+                console.error('Profil bilgileri alınamadı:', response.statusText);
+                return;
+            }
+            
+            const data = await response.json();
+            
+            // Güncel bilgilerle formu güncelle
+            document.getElementById('username').value = data.user.username;
+            document.getElementById('real_name').value = data.user.real_name;
+            document.getElementById('email').value = data.user.email;
+            document.getElementById('age').value = data.user.age;
+            
+            // localStorage'daki kullanıcı bilgilerini güncelle
+            localStorage.setItem('user', JSON.stringify(data.user));
             
         } catch (error) {
             console.error('Profil yükleme hatası:', error.message);
@@ -228,21 +271,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-      // Kullanıcının gönderilerini yükleme işlevi
+    
+    // Kullanıcının gönderilerini yükleme işlevi
     async function loadUserPosts() {
         try {
-            const currentUser = staticData.getCurrentUser();
+            const token = localStorage.getItem('token');
             
-            if (!currentUser) {
+            if (!token) {
                 window.location.href = 'login.html';
                 return;
             }
             
-            // StaticDataHandler ile tüm hikayeleri al
-            const allStories = await staticData.loadStories();
+            // API'den kullanıcının gönderilerini al
+            const response = await fetch('/api/stories/user', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             
-            // Kullanıcıya ait hikayeleri filtrele
-            const posts = allStories.filter(story => story.user_id === currentUser.id);
+            if (!response.ok) {
+                throw new Error('Gönderiler yüklenirken bir hata oluştu');
+            }
+            
+            const posts = await response.json();
             
             // Gönderi sayısını güncelle
             postCount.textContent = posts.length;
@@ -308,12 +360,13 @@ document.addEventListener('DOMContentLoaded', () => {
             day: 'numeric'
         });
     }
-      // Kullanıcının giriş durumunu kontrol et
+    
+    // Kullanıcının giriş durumunu kontrol et
     function checkAuthStatus() {
-        const currentUser = staticData.getCurrentUser();
-        if (!currentUser) {
-            // Kullanıcı giriş yapmamışsa giriş sayfasına yönlendir
-            window.location.href = 'login.html';
+        const token = localStorage.getItem('token');
+        if (!token) {
+            // Token yoksa giriş sayfasına yönlendir
+            window.location.href = '/login.html';
         }
     }
     

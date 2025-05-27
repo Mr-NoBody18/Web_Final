@@ -1,0 +1,7 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="300" fill="#f3f4f6"/>
+<rect x="50" y="50" width="300" height="200" fill="#e5e7eb"/>
+<circle cx="150" cy="120" r="30" fill="#9ca3af"/>
+<path d="M100 180L120 160L140 180L180 140L220 180L280 120L320 160L350 140V250H50V180Z" fill="#9ca3af"/>
+<text x="200" y="280" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="14">Varsayılan Görsel</text>
+</svg>

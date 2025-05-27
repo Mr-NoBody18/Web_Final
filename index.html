@@ -3,29 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HikayePortalı - Ana Sayfa</title>
-    <link rel="stylesheet" href="css/main.css">    <script src="header-loader.js"></script>
-    <script src="static-data-handler.js"></script>
-    <script src="mobile-nav.js"></script>
+    <title>Trae - Ana Sayfa</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Yeni JS yapısına göre düzenlenmiş script referansları -->    <script src="js/utils/dataUtils.js"></script>
+    <script src="js/utils/pageUtils.js"></script>
+    <script src="js/pages/index.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Static data handler ile hikayeleri yükle
-            fetchStories();
-            
-            // StaticDataHandler ile hikayeleri getir
-            async function fetchStories() {
-                try {
-                    const stories = await staticData.getStories({limit: 6, sort: 'newest'});
-                    renderStories(stories);
-                } catch (error) {
-                    console.error('Hikaye yükleme hatası:', error);
-                    document.querySelector('.card-grid').innerHTML = `
-                        <div class="error-message">
-                            <h2>Hikayeler Yüklenemedi</h2>
-                            <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
-                        </div>
-                    `;
-                }
+            // API'den hikayeleri getir
+            function fetchStoriesFromAPI() {
+                fetch('/api/stories?limit=6&sort=newest')
+                    .then(response => response.json())
+                    .then(stories => {
+                        // Hikayeleri localStorage'a kaydet
+                        localStorage.setItem('homePageStories', JSON.stringify(stories));
+                        renderStories(stories);
+                    })
+                    .catch(error => {
+                        console.error('Hikaye yükleme hatası:', error);
+                        document.querySelector('.card-grid').innerHTML = `
+                            <div class="error-message">
+                                <h2>Hikayeler Yüklenemedi</h2>
+                                <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+                            </div>
+                        `;
+                    });
             }
             
             // Hikayeleri render et
@@ -132,9 +135,8 @@
         });
     </script>
 </head>
-<body>
-    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
-    <div id="header-placeholder"></div>
+<body>    <!-- Header Placeholder - Modüler navigasyon barı buraya yüklenecek -->
+    <div id="header-container"></div>
 
     <!-- Ana Sayfa İçeriği -->
     <main class="container">

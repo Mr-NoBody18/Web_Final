@@ -98,24 +98,76 @@ document.addEventListener('DOMContentLoaded', function() {
             searchContent();
         }
     });
-      // Hikayeleri getir (static data handler kullanarak)
-    async function fetchStories() {
+    
+    // Hikayeleri getir (önce localStorage'dan, yoksa API'den)
+    function fetchStories() {
         // Yükleniyor göstergesi
         cardGrid.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Hikayeler yükleniyor...</p></div>';
         
-        try {
-            // StaticDataHandler kullanarak hikayeleri yükle
-            stories = await staticData.getStories({ limit: 20 });
-            renderStories();
-        } catch (error) {
-            console.error('Hikaye yükleme hatası:', error);
-            cardGrid.innerHTML = `
-                <div class="error-message">
-                    <h2>Hikayeler Yüklenemedi</h2>
-                    <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
-                </div>
-            `;
+        // Önce localStorage'dan hikayeleri kontrol et
+        const cachedStories = localStorage.getItem('discoverPageStories');
+        
+        if (cachedStories) {
+            try {
+                stories = JSON.parse(cachedStories);
+                renderStories();
+                
+                // Arka planda API'den güncel hikayeleri getir
+                refreshStoriesFromAPI();
+            } catch (error) {
+                console.error('Önbellek hikayeleri ayrıştırma hatası:', error);
+                fetchStoriesFromAPI();
+            }
+        } else {
+            fetchStoriesFromAPI();
         }
+    }
+    
+    // API'den hikayeleri getir
+    function fetchStoriesFromAPI() {
+        fetch('/api/stories?limit=20')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Hikayeler yüklenemedi');
+                }
+                return response.json();
+            })
+            .then(data => {
+                stories = data;
+                // Hikayeleri localStorage'a kaydet
+                localStorage.setItem('discoverPageStories', JSON.stringify(stories));
+                renderStories();
+            })
+            .catch(error => {
+                console.error('Hikaye yükleme hatası:', error);
+                cardGrid.innerHTML = `
+                    <div class="error-message">
+                        <h2>Hikayeler Yüklenemedi</h2>
+                        <p>Hikayeler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</p>
+                    </div>
+                `;
+            });
+    }
+    
+    // Arka planda API'den güncel hikayeleri getir
+    function refreshStoriesFromAPI() {
+        fetch('/api/stories?limit=20')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Hikayeler yüklenemedi');
+                }
+                return response.json();
+            })
+            .then(data => {
+                stories = data;
+                // Hikayeleri localStorage'a kaydet
+                localStorage.setItem('discoverPageStories', JSON.stringify(stories));
+                // Sayfayı yeniden render et
+                renderStories();
+            })
+            .catch(error => {
+                console.error('Hikaye güncelleme hatası:', error);
+            });
     }
     
     // Hikayeleri render et
